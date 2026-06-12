@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ColorStop } from "@/types/palette";
 import { hslToCss, clamp } from "@/lib/color";
 
@@ -13,31 +13,44 @@ interface HslChartProps {
   onChange: (shade: number, value: number) => void;
 }
 
-const VB_W = 600;
-const VB_H = 192;
-const PAD = { top: 16, bottom: 16, left: 40, right: 16 };
-const CHART_W = VB_W - PAD.left - PAD.right;
-const CHART_H = VB_H - PAD.top - PAD.bottom;
-const DOT_RADIUS = 14;
+const CHART_H = 160;
+const PAD = { top: 20, bottom: 20, left: 44, right: 16 };
+const SVG_H = CHART_H + PAD.top + PAD.bottom;
+const DOT_RADIUS = 12;
+const DOT_OFFSET_X = DOT_RADIUS + 2; // extra inset so dots don't clip label/edge
 const GRID_LINES = 5;
 
 export function HslChart({ colors, field, label, min, max, onChange }: HslChartProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const [width, setWidth] = useState(600);
   const [dragging, setDragging] = useState<{ shade: number; value: number } | null>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      setWidth(entries[0].contentRect.width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const chartW = width - PAD.left - PAD.right;
+  const dotAreaW = chartW - DOT_OFFSET_X;
 
   function valueToY(value: number): number {
     return PAD.top + (1 - (value - min) / (max - min)) * CHART_H;
   }
 
   function dotX(index: number): number {
-    return PAD.left + (index / (colors.length - 1)) * CHART_W;
+    return PAD.left + DOT_OFFSET_X + (index / (colors.length - 1)) * dotAreaW;
   }
 
   function pointerToValue(e: React.PointerEvent<SVGSVGElement>): number {
     const rect = svgRef.current!.getBoundingClientRect();
-    // Map screen Y to viewBox Y (Y scale = VB_H / rect.height)
-    const vbY = (e.clientY - rect.top) * (VB_H / rect.height);
-    const ratio = 1 - (vbY - PAD.top) / CHART_H;
+    const y = e.clientY - rect.top;
+    const ratio = 1 - (y - PAD.top) / CHART_H;
     return clamp(Math.round(min + ratio * (max - min)), min, max);
   }
 
@@ -55,17 +68,16 @@ export function HslChart({ colors, field, label, min, max, onChange }: HslChartP
   }
 
   return (
-    <div>
+    <div ref={containerRef}>
       <p className="text-sm font-semibold text-zinc-700 mb-1">{label}</p>
       <svg
         ref={svgRef}
-        viewBox={`0 0 ${VB_W} ${VB_H}`}
         width="100%"
-        height={VB_H}
+        height={SVG_H}
+        style={{ display: "block", touchAction: "none" }}
         onPointerMove={onPointerMove}
         onPointerUp={() => setDragging(null)}
         onPointerLeave={() => setDragging(null)}
-        style={{ touchAction: "none" }}
       >
         {/* Grid lines */}
         {Array.from({ length: GRID_LINES + 1 }, (_, i) => {
@@ -73,8 +85,8 @@ export function HslChart({ colors, field, label, min, max, onChange }: HslChartP
           const y = valueToY(value);
           return (
             <g key={i}>
-              <line x1={PAD.left} x2={VB_W - PAD.right} y1={y} y2={y} stroke="#e4e4e7" strokeDasharray="4 4" />
-              <text x={PAD.left - 6} y={y + 4} textAnchor="end" fontSize="10" fill="#a1a1aa">
+              <line x1={PAD.left} x2={width - PAD.right} y1={y} y2={y} stroke="#e4e4e7" strokeDasharray="4 4" />
+              <text x={PAD.left - 6} y={y + 4} textAnchor="end" fontSize="12" fill="#a1a1aa">
                 {Math.round(value)}
               </text>
             </g>
@@ -100,12 +112,12 @@ export function HslChart({ colors, field, label, min, max, onChange }: HslChartP
                 cx={x} cy={y} r={DOT_RADIUS}
                 fill={hslToCss(c.h, c.s, c.l)}
                 stroke={isDragging ? "#3f3f46" : "white"}
-                strokeWidth={isDragging ? 2.5 : 2}
+                strokeWidth={isDragging ? 2 : 1.5}
                 style={{ cursor: "ns-resize" }}
                 onPointerDown={(e) => onPointerDown(e, c.shade, c[field])}
               />
               {isDragging && (
-                <text x={x} y={y - DOT_RADIUS - 4} textAnchor="middle" fontSize="11" fontWeight="600" fill="#3f3f46" style={{ pointerEvents: "none" }}>
+                <text x={x} y={y - DOT_RADIUS - 5} textAnchor="middle" fontSize="13" fontWeight="600" fill="#3f3f46" style={{ pointerEvents: "none" }}>
                   {dragging.value}
                 </text>
               )}

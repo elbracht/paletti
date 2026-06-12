@@ -48,15 +48,18 @@ export function PaletteEditor({
     <div className="flex flex-col h-full overflow-y-auto">
       {/* Header */}
       <div className="flex items-center px-6 h-14 border-b border-zinc-200 shrink-0">
-        <PaletteName
-          name={palette.name}
-          onChange={onRename}
-          className="text-base font-semibold text-zinc-900"
-        />
+        <div className="w-full max-w-3xl">
+          <PaletteName
+            name={palette.name}
+            onChange={onRename}
+            className="text-base font-semibold text-zinc-900"
+          />
+        </div>
       </div>
 
       {/* Charts + Controls */}
-      <div className="flex-1 px-6 py-5 space-y-6">
+      <div className="flex-1 px-6 py-5">
+        <div className="max-w-3xl mx-auto space-y-6">
         <HslChart
           colors={palette.colors}
           field="h"
@@ -90,6 +93,7 @@ export function PaletteEditor({
         <HslTable colors={palette.colors} onChange={onUpdateColor} />
 
         <ExportPanel palette={palette} />
+        </div>
       </div>
     </div>
   );
