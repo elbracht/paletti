@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faCircleCheck, faUpRightFromSquare, faXmark } from "@fortawesome/pro-solid-svg-icons";
 import { Palette } from "@/types/palette";
@@ -13,6 +13,7 @@ interface ExportPanelProps {
 export function ExportPanel({ palettes }: ExportPanelProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const mouseDownTarget = useRef<EventTarget | null>(null);
 
   const css = palettes
     .map((palette) => {
@@ -44,11 +45,13 @@ export function ExportPanel({ palettes }: ExportPanelProps) {
       {open && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/30"
-          onClick={() => setOpen(false)}
+          onMouseDown={(e) => { mouseDownTarget.current = e.target; }}
+          onMouseUp={(e) => {
+            if (e.target === e.currentTarget && mouseDownTarget.current === e.currentTarget) setOpen(false);
+          }}
         >
           <div
             className="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 overflow-hidden flex flex-col max-h-[80vh]"
-            onClick={(e) => e.stopPropagation()}
           >
             {/* Modal header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200">
