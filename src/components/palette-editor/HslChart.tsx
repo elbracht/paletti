@@ -17,6 +17,7 @@ const PAD = { top: 20, bottom: 20, left: 44, right: 16 };
 const SVG_H = CHART_H + PAD.top + PAD.bottom;
 const DOT_RADIUS = 12;
 const DOT_OFFSET_X = DOT_RADIUS + 2; // extra inset so dots don't clip label/edge
+
 const GRID_LINES = 5;
 
 export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
@@ -73,7 +74,7 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
         ref={svgRef}
         width="100%"
         height={SVG_H}
-        style={{ display: "block", touchAction: "none" }}
+        style={{ display: "block", touchAction: "none", overflow: "visible" }}
         onPointerMove={onPointerMove}
         onPointerUp={() => setDragging(null)}
         onPointerLeave={() => setDragging(null)}
@@ -120,7 +121,15 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
                 onPointerLeave={() => setHovering(null)}
               />
               {showLabel && (
-                <text x={x} y={y - DOT_RADIUS - 5} textAnchor="middle" fontSize="13" fontWeight="600" fill="#3f3f46" style={{ pointerEvents: "none" }}>
+                <text
+                  x={x}
+                  y={y - DOT_RADIUS - 5}
+                  textAnchor="middle"
+                  fontSize="13"
+                  fontWeight="600"
+                  fill="#3f3f46"
+                  style={{ pointerEvents: "none" }}
+                >
                   {isDragging ? dragging.value : c[field]}
                 </text>
               )}
