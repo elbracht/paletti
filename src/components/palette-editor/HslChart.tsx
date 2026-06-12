@@ -36,7 +36,7 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
   }, []);
 
   const chartW = width - PAD.left - PAD.right;
-  const dotAreaW = chartW - DOT_OFFSET_X;
+  const dotAreaW = chartW - DOT_OFFSET_X * 2;
 
   function valueToY(value: number): number {
     return PAD.top + (1 - (value - min) / (max - min)) * CHART_H;
