@@ -19,9 +19,9 @@ export function HslTable({ colors, onChange }: HslTableProps) {
       <thead>
         <tr className="text-zinc-400 text-xs">
           <th className="pb-2 text-left w-20" />
-          <th className="pb-2 text-right font-medium">H</th>
-          <th className="pb-2 text-right font-medium">S</th>
-          <th className="pb-2 text-right font-medium">L</th>
+          <th className="pb-2 text-left font-medium pl-2">H</th>
+          <th className="pb-2 text-left font-medium pl-2">S</th>
+          <th className="pb-2 text-left font-medium pl-2">L</th>
         </tr>
       </thead>
       <tbody>
@@ -44,10 +44,10 @@ export function HslTable({ colors, onChange }: HslTableProps) {
                 <input
                   type="number"
                   value={Math.round(c[field])}
-                  min={field === "h" ? 0 : 0}
+                  min={0}
                   max={field === "h" ? 360 : 100}
                   onChange={(e) => handleInput(c.shade, field, e.target.value)}
-                  className="w-14 text-right text-zinc-700 bg-transparent hover:bg-zinc-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-zinc-300 rounded px-1 py-0.5 tabular-nums"
+                  className="w-full text-left text-zinc-700 bg-transparent hover:bg-zinc-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-zinc-300 rounded px-1 py-0.5 tabular-nums"
                 />
               </td>
             ))}
