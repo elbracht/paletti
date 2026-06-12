@@ -30,7 +30,8 @@ type Action =
   | { type: "APPLY_HUE_SHIFT"; id: string; delta: number }
   | { type: "APPLY_SATURATION_SHIFT"; id: string; delta: number }
   | { type: "APPLY_LIGHTNESS_SHIFT"; id: string; delta: number }
-  | { type: "SET_PALETTES"; palettes: Palette[] };
+  | { type: "SET_PALETTES"; palettes: Palette[] }
+  | { type: "REORDER_PALETTES"; fromIndex: number; toIndex: number };
 
 interface State {
   palettes: Palette[];
@@ -124,6 +125,12 @@ function reducer(state: State, action: Action): State {
         selectedId: action.palettes[0]?.id ?? null,
         paletteCount: action.palettes.length,
       };
+    case "REORDER_PALETTES": {
+      const palettes = [...state.palettes];
+      const [moved] = palettes.splice(action.fromIndex, 1);
+      palettes.splice(action.toIndex, 0, moved);
+      return { ...state, palettes };
+    }
     default:
       return state;
   }
@@ -173,6 +180,11 @@ export function usePalettes(initial?: Palette[]) {
       dispatch({ type: "APPLY_LIGHTNESS_SHIFT", id, delta }),
     [],
   );
+  const reorderPalettes = useCallback(
+    (fromIndex: number, toIndex: number) =>
+      dispatch({ type: "REORDER_PALETTES", fromIndex, toIndex }),
+    [],
+  );
   const setPalettes = useCallback(
     (palettes: Palette[]) => dispatch({ type: "SET_PALETTES", palettes }),
     [],
@@ -190,6 +202,7 @@ export function usePalettes(initial?: Palette[]) {
     applyHueShift: applyHueShiftAction,
     applySaturationShift: applySaturationShiftAction,
     applyLightnessShift: applyLightnessShiftAction,
+    reorderPalettes,
     setPalettes,
   };
 }

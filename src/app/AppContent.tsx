@@ -18,6 +18,7 @@ export default function AppContent() {
     applyHueShift,
     applySaturationShift,
     applyLightnessShift,
+    reorderPalettes,
     setPalettes,
   } = usePalettes();
 
@@ -33,6 +34,7 @@ export default function AppContent() {
         onAdd={addPalette}
         onRename={renamePalette}
         onDelete={deletePalette}
+        onReorder={reorderPalettes}
       />
 
       {/* Right column */}
