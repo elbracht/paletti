@@ -42,6 +42,7 @@ function AppContent() {
           <PaletteEditor
             key={selectedPalette.id}
             palette={selectedPalette}
+            allPalettes={palettes}
             onRename={(name) => renamePalette(selectedPalette.id, name)}
             onUpdateColor={(shade, field, value) =>
               updateColor(selectedPalette.id, shade, field, value)

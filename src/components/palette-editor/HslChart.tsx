@@ -7,7 +7,6 @@ import { hslToCss, clamp } from "@/lib/color";
 interface HslChartProps {
   colors: ColorStop[];
   field: "h" | "s" | "l";
-  label: string;
   min: number;
   max: number;
   onChange: (shade: number, value: number) => void;
@@ -20,7 +19,7 @@ const DOT_RADIUS = 12;
 const DOT_OFFSET_X = DOT_RADIUS + 2; // extra inset so dots don't clip label/edge
 const GRID_LINES = 5;
 
-export function HslChart({ colors, field, label, min, max, onChange }: HslChartProps) {
+export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [width, setWidth] = useState(600);
@@ -69,7 +68,6 @@ export function HslChart({ colors, field, label, min, max, onChange }: HslChartP
 
   return (
     <div ref={containerRef}>
-      <p className="text-sm font-semibold text-zinc-700 mb-1">{label}</p>
       <svg
         ref={svgRef}
         width="100%"
