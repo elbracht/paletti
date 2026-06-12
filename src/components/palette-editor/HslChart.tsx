@@ -24,6 +24,7 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [width, setWidth] = useState(600);
   const [dragging, setDragging] = useState<{ shade: number; value: number } | null>(null);
+  const [hovering, setHovering] = useState<number | null>(null);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -104,6 +105,8 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
           const x = dotX(i);
           const y = valueToY(c[field]);
           const isDragging = dragging?.shade === c.shade;
+          const isHovering = hovering === c.shade;
+          const showLabel = isDragging || isHovering;
           return (
             <g key={c.shade}>
               <circle
@@ -113,10 +116,12 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
                 strokeWidth={isDragging ? 2 : 1.5}
                 style={{ cursor: "ns-resize" }}
                 onPointerDown={(e) => onPointerDown(e, c.shade, c[field])}
+                onPointerEnter={() => setHovering(c.shade)}
+                onPointerLeave={() => setHovering(null)}
               />
-              {isDragging && (
+              {showLabel && (
                 <text x={x} y={y - DOT_RADIUS - 5} textAnchor="middle" fontSize="13" fontWeight="600" fill="#3f3f46" style={{ pointerEvents: "none" }}>
-                  {dragging.value}
+                  {isDragging ? dragging.value : c[field]}
                 </text>
               )}
             </g>
