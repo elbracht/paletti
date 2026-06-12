@@ -27,10 +27,12 @@ export function PaletteList({
   onReorder,
 }: PaletteListProps) {
   const dragIndex = useRef<number | null>(null);
+  const [activeDragIndex, setActiveDragIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   function handleDragStart(e: React.DragEvent, index: number) {
     dragIndex.current = index;
+    setActiveDragIndex(index);
     // Create a custom drag image that respects border-radius
     const el = e.currentTarget as HTMLElement;
     const ghost = el.cloneNode(true) as HTMLElement;
@@ -62,17 +64,19 @@ export function PaletteList({
       }
     }
     dragIndex.current = null;
+    setActiveDragIndex(null);
     setDragOverIndex(null);
   }
 
   function handleDragEnd() {
     dragIndex.current = null;
+    setActiveDragIndex(null);
     setDragOverIndex(null);
   }
 
   return (
     <aside
-      className="flex flex-col h-full bg-zinc-50 border-r border-zinc-200 w-72 shrink-0"
+      className="flex h-full w-72 shrink-0 flex-col border-r border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950"
       onDragOver={(e) => {
         e.preventDefault();
         if (palettes.length === 0) return;
@@ -86,8 +90,8 @@ export function PaletteList({
         }
       }}
     >
-      <div className="flex items-center justify-between px-4 h-14 border-b border-zinc-200 shrink-0">
-        <h1 className="text-base font-semibold text-zinc-900 tracking-tight">
+      <div className="flex h-14 shrink-0 items-center justify-between border-b border-zinc-200 px-4 dark:border-zinc-800">
+        <h1 className="text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
           Paletti
         </h1>
         <AddPaletteButton onAdd={onAdd} onImport={onImport} />
@@ -110,10 +114,10 @@ export function PaletteList({
         onDrop={() => handleDrop(palettes.length - 1)}
       >
         {palettes.length === 0 && (
-          <p className="text-sm text-zinc-400 text-center mt-8">
+          <p className="mt-8 text-center text-sm text-zinc-400 dark:text-zinc-500">
             No palettes yet.
             <br />
-            Click "+ New" to get started.
+            Click &quot;+ New&quot; to get started.
           </p>
         )}
         <div className="flex flex-col gap-2">
@@ -126,13 +130,13 @@ export function PaletteList({
               onDrop={() => handleDrop(index)}
               onDragEnd={handleDragEnd}
               className={`relative transition-opacity ${
-                dragIndex.current === index ? "opacity-40" : "opacity-100"
+                activeDragIndex === index ? "opacity-40" : "opacity-100"
               }`}
             >
               {/* Line centered in the gap above (gap=8px → -5px centers a 2px line) */}
               {dragOverIndex === index && (
                 <div
-                  className="absolute left-0 right-0 h-0.5 rounded-full bg-zinc-700 pointer-events-none z-10"
+                  className="pointer-events-none absolute right-0 left-0 z-10 h-0.5 rounded-full bg-zinc-700 dark:bg-zinc-300"
                   style={{ top: index === 0 ? "-3px" : "-5px" }}
                 />
               )}
@@ -145,7 +149,7 @@ export function PaletteList({
               />
               {/* Line below last card */}
               {dragOverIndex === palettes.length && index === palettes.length - 1 && (
-                <div className="absolute left-0 right-0 h-0.5 rounded-full bg-zinc-700 pointer-events-none z-10" style={{ bottom: "-5px" }} />
+                <div className="pointer-events-none absolute right-0 left-0 z-10 h-0.5 rounded-full bg-zinc-700 dark:bg-zinc-300" style={{ bottom: "-5px" }} />
               )}
             </div>
           ))}

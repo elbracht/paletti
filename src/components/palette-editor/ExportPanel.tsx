@@ -36,7 +36,7 @@ export function ExportPanel({ palettes }: ExportPanelProps) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg border border-zinc-200 text-zinc-700 hover:bg-zinc-50 transition-colors cursor-pointer"
+        className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
       >
         <FontAwesomeIcon icon={faUpRightFromSquare} className="text-xs" />
         Export
@@ -51,14 +51,14 @@ export function ExportPanel({ palettes }: ExportPanelProps) {
           }}
         >
           <div
-            className="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 overflow-hidden flex flex-col max-h-[80vh]"
+            className="mx-4 flex max-h-[80vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-zinc-900"
           >
             {/* Modal header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200">
-              <p className="text-sm font-semibold text-zinc-900">Export — Tailwind v4</p>
+            <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-4 dark:border-zinc-800">
+              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Export — Tailwind v4</p>
               <button
                 onClick={() => setOpen(false)}
-                className="text-zinc-400 hover:text-zinc-700 transition-colors cursor-pointer"
+                className="cursor-pointer text-zinc-400 transition-colors hover:text-zinc-700 dark:hover:text-zinc-200"
                 aria-label="Close"
               >
                 <FontAwesomeIcon icon={faXmark} />
@@ -67,16 +67,16 @@ export function ExportPanel({ palettes }: ExportPanelProps) {
 
             {/* Modal body */}
             <div className="p-5 overflow-y-auto flex-1">
-              <pre className="text-xs text-zinc-500 bg-zinc-50 border border-zinc-200 rounded-lg p-4 overflow-x-auto leading-5">
+              <pre className="overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-xs leading-5 text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
                 {fullCss}
               </pre>
             </div>
 
             {/* Modal footer */}
-            <div className="flex items-center justify-end px-5 py-4 border-t border-zinc-200 shrink-0">
+            <div className="flex shrink-0 items-center justify-end border-t border-zinc-200 px-5 py-4 dark:border-zinc-800">
               <button
                 onClick={copy}
-                className="flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg bg-zinc-900 text-white hover:bg-zinc-700 transition-colors cursor-pointer"
+                className="flex cursor-pointer items-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
               >
                 <FontAwesomeIcon icon={copied ? faCircleCheck : faCopy} />
                 {copied ? "Copied!" : "Copy CSS"}

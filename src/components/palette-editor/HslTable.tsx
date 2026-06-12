@@ -17,7 +17,7 @@ export function HslTable({ colors, onChange }: HslTableProps) {
   return (
     <table className="w-full text-sm">
       <thead>
-        <tr className="text-zinc-400 text-xs">
+        <tr className="text-xs text-zinc-400 dark:text-zinc-500">
           <th className="pb-2 text-left w-20" />
           <th className="pb-2 text-left font-medium pl-2">H</th>
           <th className="pb-2 text-left font-medium pl-2">S</th>
@@ -26,7 +26,7 @@ export function HslTable({ colors, onChange }: HslTableProps) {
       </thead>
       <tbody>
         {colors.map((c) => (
-          <tr key={c.shade} className="border-t border-zinc-100">
+          <tr key={c.shade} className="border-t border-zinc-100 dark:border-zinc-800">
             <td className="py-1 pr-3">
               <div
                 className="rounded px-2 py-1 text-xs font-semibold text-center"
@@ -47,7 +47,7 @@ export function HslTable({ colors, onChange }: HslTableProps) {
                   min={0}
                   max={field === "h" ? 360 : 100}
                   onChange={(e) => handleInput(c.shade, field, e.target.value)}
-                  className="w-full text-left text-zinc-700 bg-transparent hover:bg-zinc-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-zinc-300 rounded px-1 py-0.5 tabular-nums"
+                  className="w-full rounded bg-transparent px-1 py-0.5 text-left tabular-nums text-zinc-700 hover:bg-zinc-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-zinc-300 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:focus:bg-zinc-900 dark:focus:ring-zinc-600"
                 />
               </td>
             ))}

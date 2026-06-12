@@ -6,6 +6,7 @@ import { HslChart } from "./HslChart";
 import { ShiftSlider } from "./HueShiftSlider";
 import { HslTable } from "./HslTable";
 import { ExportPanel } from "./ExportPanel";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface PaletteEditorProps {
   palette: Palette;
@@ -56,21 +57,24 @@ export function PaletteEditor({
   return (
     <div className="flex flex-col h-full overflow-y-auto">
       {/* Header */}
-      <div className="sticky top-0 z-10 flex items-center justify-between px-6 h-14 border-b border-zinc-200 bg-white shrink-0">
+      <div className="sticky top-0 z-10 flex h-14 shrink-0 items-center justify-between border-b border-zinc-200 bg-white px-6 dark:border-zinc-800 dark:bg-zinc-950">
         <PaletteName
           name={palette.name}
           onChange={onRename}
-          className="text-base font-semibold text-zinc-900"
+          className="text-base font-semibold text-zinc-900 dark:text-zinc-100"
         />
-        <ExportPanel palettes={allPalettes} />
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <ExportPanel palettes={allPalettes} />
+        </div>
       </div>
 
       {/* Charts + Controls */}
       <div className="flex-1 px-6 py-5">
         <div className="max-w-3xl mx-auto space-y-6">
-          <div className="rounded-xl border border-zinc-200 p-4">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-semibold text-zinc-700">Hue</p>
+          <div className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Hue</p>
               <ShiftSlider
                 value={hueAvg}
                 min={hueSliderMin}
@@ -87,9 +91,9 @@ export function PaletteEditor({
             />
           </div>
 
-          <div className="rounded-xl border border-zinc-200 p-4">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-semibold text-zinc-700">Saturation</p>
+          <div className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Saturation</p>
               <ShiftSlider
                 value={satAvg}
                 min={satSliderMin}
@@ -106,9 +110,9 @@ export function PaletteEditor({
             />
           </div>
 
-          <div className="rounded-xl border border-zinc-200 p-4">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-semibold text-zinc-700">Lightness</p>
+          <div className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Lightness</p>
               <ShiftSlider
                 value={lightAvg}
                 min={lightSliderMin}

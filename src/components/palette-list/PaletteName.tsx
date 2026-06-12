@@ -23,10 +23,6 @@ export function PaletteName({
     if (editing) inputRef.current?.select();
   }, [editing]);
 
-  useEffect(() => {
-    setDraft(name);
-  }, [name]);
-
   function commit() {
     const trimmed = draft.trim();
     if (trimmed) onChange(trimmed);
@@ -48,21 +44,26 @@ export function PaletteName({
             setEditing(false);
           }
         }}
-        className={`bg-transparent outline-none border-b border-zinc-400 focus:border-zinc-700 ${className}`}
+        className={`border-b border-zinc-400 bg-transparent outline-none focus:border-zinc-700 dark:border-zinc-500 dark:focus:border-zinc-300 ${className}`}
       />
     );
   }
 
+  function startEditing() {
+    setDraft(name);
+    setEditing(true);
+  }
+
   return (
     <span
-      className={`group/name flex items-center gap-1.5 cursor-pointer ${className}`}
-      onClick={() => setEditing(true)}
+      className={`group/name flex cursor-pointer items-center gap-1.5 ${className}`}
+      onClick={startEditing}
       title="Click to rename"
     >
       {name}
       <FontAwesomeIcon
         icon={faPen}
-        className="text-zinc-300 group-hover/name:text-zinc-500 transition-colors text-[10px]"
+        className="text-[10px] text-zinc-300 transition-colors group-hover/name:text-zinc-500 dark:text-zinc-600 dark:group-hover/name:text-zinc-400"
       />
     </span>
   );

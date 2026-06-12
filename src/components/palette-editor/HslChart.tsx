@@ -90,8 +90,8 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
           const y = valueToY(value);
           return (
             <g key={i}>
-              <line x1={PAD.left} x2={width - PAD.right} y1={y} y2={y} stroke="#e4e4e7" strokeDasharray="4 4" />
-              <text x={PAD.left - 6} y={y + 4} textAnchor="end" fontSize="12" fill="#a1a1aa">
+              <line x1={PAD.left} x2={width - PAD.right} y1={y} y2={y} stroke="var(--chart-grid)" strokeDasharray="4 4" />
+              <text x={PAD.left - 6} y={y + 4} textAnchor="end" fontSize="12" fill="var(--chart-text)">
                 {Math.round(value)}
               </text>
             </g>
@@ -102,7 +102,7 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
         <polyline
           points={colors.map((c, i) => `${dotX(i)},${valueToY(c[field])}`).join(" ")}
           fill="none"
-          stroke="#a1a1aa"
+          stroke="var(--chart-line)"
           strokeWidth="1.5"
         />
 
@@ -138,7 +138,7 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
                   textAnchor="middle"
                   fontSize="13"
                   fontWeight="600"
-                  fill="#3f3f46"
+                  fill="var(--chart-label)"
                   style={{ pointerEvents: "none" }}
                 >
                   {isDragging ? dragging.value : c[field]}

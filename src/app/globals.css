@@ -1,8 +1,23 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --chart-grid: #e4e4e7;
+  --chart-text: #a1a1aa;
+  --chart-line: #a1a1aa;
+  --chart-label: #3f3f46;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --chart-grid: #3f3f46;
+  --chart-text: #71717a;
+  --chart-line: #52525b;
+  --chart-label: #d4d4d8;
 }
 
 @theme inline {
@@ -10,13 +25,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -62,4 +70,20 @@ input[type="range"].shift-slider::-moz-range-thumb {
   background: #3f3f46;
   border: none;
   cursor: pointer;
+}
+
+.dark input[type="range"].shift-slider::-webkit-slider-runnable-track {
+  background: #52525b;
+}
+
+.dark input[type="range"].shift-slider::-webkit-slider-thumb {
+  background: #d4d4d8;
+}
+
+.dark input[type="range"].shift-slider::-moz-range-track {
+  background: #52525b;
+}
+
+.dark input[type="range"].shift-slider::-moz-range-thumb {
+  background: #d4d4d8;
 }

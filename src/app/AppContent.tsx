@@ -4,6 +4,7 @@ import { usePalettes } from "@/hooks/usePalettes";
 import { useUrlSync } from "@/hooks/useUrlSync";
 import { PaletteList } from "@/components/palette-list/PaletteList";
 import { PaletteEditor } from "@/components/palette-editor/PaletteEditor";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function AppContent() {
   const {
@@ -26,7 +27,7 @@ export default function AppContent() {
   useUrlSync({ palettes, onLoad: setPalettes });
 
   return (
-    <div className="flex h-screen overflow-hidden bg-white">
+    <div className="flex h-screen overflow-hidden bg-white dark:bg-zinc-900">
       {/* Left column */}
       <PaletteList
         palettes={palettes}
@@ -59,8 +60,13 @@ export default function AppContent() {
             }
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-zinc-400">
-            <p className="text-sm">Select a palette to start editing</p>
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-end px-6 h-14 border-b border-zinc-200 dark:border-zinc-800 shrink-0">
+              <ThemeToggle />
+            </div>
+            <div className="flex flex-1 items-center justify-center text-zinc-400 dark:text-zinc-500">
+              <p className="text-sm">Select a palette to start editing</p>
+            </div>
           </div>
         )}
       </main>

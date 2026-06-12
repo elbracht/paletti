@@ -24,10 +24,10 @@ export function PaletteCard({
   return (
     <div
       onClick={onSelect}
-      className={`group rounded-xl border p-3 cursor-pointer transition-all ${
+      className={`group cursor-pointer rounded-xl border p-3 transition-all ${
         isSelected
-          ? "border-zinc-700 bg-white shadow-md"
-          : "border-zinc-200 bg-white hover:border-zinc-400 hover:shadow-sm"
+          ? "border-zinc-700 bg-white shadow-md dark:border-zinc-400 dark:bg-zinc-800"
+          : "border-zinc-200 bg-white hover:border-zinc-400 hover:shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-zinc-500"
       }`}
     >
       {/* Color swatches */}
@@ -46,7 +46,7 @@ export function PaletteCard({
         <PaletteName
           name={palette.name}
           onChange={onRename}
-          className="text-sm font-medium text-zinc-800 truncate"
+          className="truncate text-sm font-medium text-zinc-800 dark:text-zinc-200"
         />
         <button
           onClick={(e) => {
