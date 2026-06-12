@@ -79,6 +79,11 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
         onPointerUp={() => setDragging(null)}
         onPointerLeave={() => setDragging(null)}
       >
+        <defs>
+          <filter id="dot-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="#00000033" />
+          </filter>
+        </defs>
         {/* Grid lines */}
         {Array.from({ length: GRID_LINES + 1 }, (_, i) => {
           const value = min + ((max - min) * i) / GRID_LINES;
@@ -113,9 +118,15 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
               <circle
                 cx={x} cy={y} r={DOT_RADIUS}
                 fill={hslToCss(c.h, c.s, c.l)}
-                stroke={isDragging ? "#3f3f46" : "white"}
-                strokeWidth={isDragging ? 2 : 1.5}
-                style={{ cursor: "ns-resize" }}
+                stroke="white"
+                strokeWidth="1.5"
+                filter="url(#dot-shadow)"
+                style={{
+                  cursor: "ns-resize",
+                  transform: isDragging ? `scale(1.2)` : "scale(1)",
+                  transformOrigin: `${x}px ${y}px`,
+                  transition: "transform 0.1s ease",
+                }}
                 onPointerDown={(e) => onPointerDown(e, c.shade, c[field])}
                 onPointerEnter={() => setHovering(c.shade)}
                 onPointerLeave={() => setHovering(null)}
