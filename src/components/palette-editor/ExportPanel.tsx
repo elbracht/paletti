@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy, faCircleCheck } from "@fortawesome/free-regular-svg-icons";
-import { faUpRightFromSquare, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faCircleCheck, faUpRightFromSquare, faXmark } from "@fortawesome/pro-solid-svg-icons";
 import { Palette } from "@/types/palette";
 import { hslToOklch } from "@/lib/color";
 

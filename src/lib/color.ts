@@ -91,7 +91,127 @@ function oklabToOklch(
   return [L, C, H];
 }
 
-// ─── Public API ──────────────────────────────────────────────────────────────
+// ─── oklch → Oklab ───────────────────────────────────────────────────────────
+
+function oklchToOklab(L: number, C: number, H: number): [number, number, number] {
+  const h = (H * Math.PI) / 180;
+  return [L, C * Math.cos(h), C * Math.sin(h)];
+}
+
+// ─── Oklab → XYZ D65 ─────────────────────────────────────────────────────────
+
+function oklabToXyz(L: number, a: number, b: number): [number, number, number] {
+  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+  const l = l_ * l_ * l_;
+  const m = m_ * m_ * m_;
+  const s = s_ * s_ * s_;
+  // Correct M1-inverse: LMS [1,1,1] → XYZ D65 white [0.9505, 1.0, 1.089]
+  return [
+     1.2270138511035211 * l - 0.5577999806518222 * m + 0.2812561489664678 * s,
+    -0.0405801784232806 * l + 1.1122568696168302 * m - 0.0716766786656012 * s,
+    -0.0763812845057069 * l - 0.4214819784180127 * m + 1.5861632204407947 * s,
+  ];
+}
+
+// ─── XYZ D65 → Linear sRGB ───────────────────────────────────────────────────
+
+function xyzToLinearRgb(x: number, y: number, z: number): [number, number, number] {
+  return [
+     3.2404542 * x - 1.5371385 * y - 0.4985314 * z,
+    -0.9692660 * x + 1.8760108 * y + 0.0415560 * z,
+     0.0556434 * x - 0.2040259 * y + 1.0572252 * z,
+  ];
+}
+
+// ─── Linear sRGB → sRGB ──────────────────────────────────────────────────────
+
+function fromLinear(c: number): number {
+  const clamped = Math.max(0, Math.min(1, c));
+  return clamped <= 0.0031308 ? 12.92 * clamped : 1.055 * Math.pow(clamped, 1 / 2.4) - 0.055;
+}
+
+// ─── sRGB → HSL ──────────────────────────────────────────────────────────────
+
+function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return [0, 0, Math.round(l * 100)];
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h = 0;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+/**
+ * Convert oklch (L, C, H) to in-gamut sRGB [r, g, b] using binary-search
+ * chroma reduction. This prevents hard-clamping from corrupting the hue of
+ * colors that are slightly outside the sRGB gamut.
+ */
+function oklchToInGamutRgb(L: number, C: number, H: number): [number, number, number] {
+  const toRgb = (l: number, c: number, h: number) => {
+    const [okL, okA, okB] = oklchToOklab(l, c, h);
+    const [x, y, z] = oklabToXyz(okL, okA, okB);
+    return xyzToLinearRgb(x, y, z);
+  };
+
+  const inGamut = ([r, g, b]: [number, number, number]) =>
+    r >= -1e-4 && r <= 1 + 1e-4 &&
+    g >= -1e-4 && g <= 1 + 1e-4 &&
+    b >= -1e-4 && b <= 1 + 1e-4;
+
+  let [rl, gl, bl] = toRgb(L, C, H);
+
+  if (!inGamut([rl, gl, bl])) {
+    // Binary-search for the largest in-gamut chroma
+    let lo = 0, hi = C;
+    for (let i = 0; i < 24; i++) {
+      const mid = (lo + hi) / 2;
+      if (inGamut(toRgb(L, mid, H))) lo = mid;
+      else hi = mid;
+    }
+    [rl, gl, bl] = toRgb(L, lo, H);
+  }
+
+  return [
+    fromLinear(Math.max(0, Math.min(1, rl))),
+    fromLinear(Math.max(0, Math.min(1, gl))),
+    fromLinear(Math.max(0, Math.min(1, bl))),
+  ];
+}
+
+/** Convert an oklch CSS string like `oklch(56.3% 0.172 142.5)` or `oklch(0.563 0.172 142.5)` to HSL */
+export function oklchToHsl(oklchStr: string): [number, number, number] | null {
+  const m = oklchStr.match(/oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)\s*\)/);
+  if (!m) return null;
+  const raw = parseFloat(m[1]);
+  // L is either a percentage (62.3%) or a 0–1 value (0.623)
+  const L = m[2] === "%" ? raw / 100 : raw;
+  const C = parseFloat(m[3]);
+  const H = parseFloat(m[4]);
+  const [r, g, b] = oklchToInGamutRgb(L, C, H);
+  return rgbToHsl(r, g, b);
+}
+
+/** Convert a hex color string like `#edf4fd` to HSL */
+export function hexToHsl(hex: string): [number, number, number] | null {
+  const m = hex.match(/^#([0-9a-f]{3,8})$/i);
+  if (!m) return null;
+  let h = m[1];
+  if (h.length === 3) h = h.split("").map((c) => c + c).join("");
+  if (h.length !== 6) return null;
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+  return rgbToHsl(r, g, b);
+}
+
+
 
 /** Convert HSL values to an oklch CSS string, e.g. `oklch(56.3% 0.172 142.5)` */
 export function hslToOklch(h: number, s: number, l: number): string {

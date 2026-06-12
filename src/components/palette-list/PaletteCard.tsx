@@ -1,7 +1,7 @@
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faTrashCan } from "@fortawesome/pro-solid-svg-icons";
 import { Palette } from "@/types/palette";
 import { PaletteName } from "./PaletteName";
 import { hslToCss } from "@/lib/color";

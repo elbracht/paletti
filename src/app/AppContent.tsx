@@ -18,6 +18,7 @@ export default function AppContent() {
     applyHueShift,
     applySaturationShift,
     applyLightnessShift,
+    importPalettes,
     reorderPalettes,
     setPalettes,
   } = usePalettes();
@@ -32,6 +33,7 @@ export default function AppContent() {
         selectedId={selectedId}
         onSelect={selectPalette}
         onAdd={addPalette}
+        onImport={importPalettes}
         onRename={renamePalette}
         onDelete={deletePalette}
         onReorder={reorderPalettes}

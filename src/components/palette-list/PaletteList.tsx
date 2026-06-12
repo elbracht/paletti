@@ -1,16 +1,16 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Palette } from "@/types/palette";
 import { PaletteCard } from "./PaletteCard";
+import { AddPaletteButton } from "./AddPaletteButton";
 
 interface PaletteListProps {
   palettes: Palette[];
   selectedId: string | null;
   onSelect: (id: string) => void;
   onAdd: () => void;
+  onImport: (palettes: Palette[]) => void;
   onRename: (id: string, name: string) => void;
   onDelete: (id: string) => void;
   onReorder: (fromIndex: number, toIndex: number) => void;
@@ -21,6 +21,7 @@ export function PaletteList({
   selectedId,
   onSelect,
   onAdd,
+  onImport,
   onRename,
   onDelete,
   onReorder,
@@ -89,12 +90,7 @@ export function PaletteList({
         <h1 className="text-base font-semibold text-zinc-900 tracking-tight">
           Paletti
         </h1>
-        <button
-          onClick={onAdd}
-          className="w-8 h-8 flex items-center justify-center text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200 rounded-lg transition-colors cursor-pointer"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
+        <AddPaletteButton onAdd={onAdd} onImport={onImport} />
       </div>
 
       <div
