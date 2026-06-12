@@ -117,7 +117,7 @@ export function PaletteList({
           <p className="mt-8 text-center text-sm text-zinc-400 dark:text-zinc-500">
             No palettes yet.
             <br />
-            Click &quot;+ New&quot; to get started.
+            Click &quot;+&quot; to get started.
           </p>
         )}
         <div className="flex flex-col gap-2">
