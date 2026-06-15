@@ -80,7 +80,9 @@ export function PaletteList({
       onDragOver={(e) => {
         e.preventDefault();
         if (palettes.length === 0) return;
-        const firstCard = e.currentTarget.querySelector("[draggable]") as HTMLElement;
+        const firstCard = e.currentTarget.querySelector(
+          "[draggable]",
+        ) as HTMLElement;
         const lastCard = e.currentTarget.querySelectorAll("[draggable]");
         const last = lastCard[lastCard.length - 1] as HTMLElement;
         if (firstCard && e.clientY < firstCard.getBoundingClientRect().top) {
@@ -91,7 +93,14 @@ export function PaletteList({
       }}
     >
       <div className="flex h-14 shrink-0 items-center justify-between border-b border-zinc-200 px-4 dark:border-zinc-800">
-        <h1 className="text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+        <h1 className="flex items-center gap-2 text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+          <svg viewBox="0 0 32 32" className="h-5 w-5 shrink-0">
+            <rect width="32" height="32" rx="6" fill="#18181b" />
+            <rect x="5" y="5" width="22" height="4" rx="1.5" fill="#E1EEFF" />
+            <rect x="5" y="11" width="22" height="4" rx="1.5" fill="#B7D7FF" />
+            <rect x="5" y="17" width="22" height="4" rx="1.5" fill="#74A9FF" />
+            <rect x="5" y="23" width="22" height="4" rx="1.5" fill="#5078EB" />
+          </svg>
           Paletti
         </h1>
         <AddPaletteButton onAdd={onAdd} onImport={onImport} />
@@ -102,7 +111,9 @@ export function PaletteList({
         onDragOver={(e) => {
           e.preventDefault();
           if (palettes.length === 0) return;
-          const firstCard = e.currentTarget.querySelector("[draggable]") as HTMLElement;
+          const firstCard = e.currentTarget.querySelector(
+            "[draggable]",
+          ) as HTMLElement;
           const lastCard = e.currentTarget.querySelectorAll("[draggable]");
           const last = lastCard[lastCard.length - 1] as HTMLElement;
           if (firstCard && e.clientY < firstCard.getBoundingClientRect().top) {
@@ -148,9 +159,13 @@ export function PaletteList({
                 onDelete={() => onDelete(palette.id)}
               />
               {/* Line below last card */}
-              {dragOverIndex === palettes.length && index === palettes.length - 1 && (
-                <div className="pointer-events-none absolute right-0 left-0 z-10 h-0.5 rounded-full bg-zinc-700 dark:bg-zinc-300" style={{ bottom: "-5px" }} />
-              )}
+              {dragOverIndex === palettes.length &&
+                index === palettes.length - 1 && (
+                  <div
+                    className="pointer-events-none absolute right-0 left-0 z-10 h-0.5 rounded-full bg-zinc-700 dark:bg-zinc-300"
+                    style={{ bottom: "-5px" }}
+                  />
+                )}
             </div>
           ))}
         </div>
