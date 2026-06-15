@@ -25,13 +25,23 @@ describe('HslTable', () => {
 
     // Find the H input for shade 500
     const rows = screen.getAllByRole('row');
-    const shade500Row = rows.find(
-      (r) => r.querySelector('td')?.textContent === '500',
-    )!;
+    const shade500Row = rows.find((r) => r.querySelector('td')?.textContent === '500')!;
     const inputs = shade500Row.querySelectorAll('input[type="number"]');
     const hInput = inputs[0];
 
     fireEvent.change(hInput, { target: { value: '200' } });
     expect(onChange).toHaveBeenCalledWith(500, 'h', 200);
+  });
+
+  it('does not call onChange for non-numeric input (NaN)', () => {
+    const onChange = vi.fn();
+    render(<HslTable colors={colors} onChange={onChange} />);
+
+    const rows = screen.getAllByRole('row');
+    const shade500Row = rows.find((r) => r.querySelector('td')?.textContent === '500')!;
+    const hInput = shade500Row.querySelectorAll('input[type="number"]')[0];
+
+    fireEvent.change(hInput, { target: { value: '' } });
+    expect(onChange).not.toHaveBeenCalled();
   });
 });

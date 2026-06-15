@@ -1,7 +1,9 @@
 <!-- BEGIN:nextjs-agent-rules -->
+
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+
 <!-- END:nextjs-agent-rules -->
 
 # Paletti — palette editor
@@ -12,13 +14,13 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Commands
 
-| Action | Command |
-|--------|---------|
-| Dev server | `npm run dev` |
-| Build | `npm run build` |
-| Lint | `npm run lint` |
-| Test (single run) | `npm test` |
-| Test (watch) | `npm run test:watch` |
+| Action            | Command              |
+| ----------------- | -------------------- |
+| Dev server        | `npm run dev`        |
+| Build             | `npm run build`      |
+| Lint              | `npm run lint`       |
+| Test (single run) | `npm test`           |
+| Test (watch)      | `npm run test:watch` |
 
 ## Testing
 
@@ -35,6 +37,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## Tailwind v4
 
 This project uses **Tailwind CSS v4** (`@tailwindcss/postcss`), not v3. Key differences:
+
 - Use `@import "tailwindcss"` instead of `@tailwind base/components/utilities`
 - Use `@custom-variant` instead of `@variants` or `dark:` class-based variants config
 - Dark mode uses `.dark` class (not `prefers-color-scheme`), toggled via JS
@@ -54,14 +57,14 @@ This project uses **Tailwind CSS v4** (`@tailwindcss/postcss`), not v3. Key diff
 
 Use semantic commits with one of these prefixes:
 
-| Prefix   | When to use                                |
-|----------|--------------------------------------------|
-| `feat:`  | New feature or user-facing addition        |
-| `fix:`   | Bug fix                                    |
-| `refactor:` | Code change without new feature or fix  |
-| `style:` | Formatting, whitespace, Prettier-only      |
-| `docs:`  | Documentation or AGENTS.md changes         |
-| `chore:` | Dependencies, tooling, config, build       |
+| Prefix      | When to use                            |
+| ----------- | -------------------------------------- |
+| `feat:`     | New feature or user-facing addition    |
+| `fix:`      | Bug fix                                |
+| `refactor:` | Code change without new feature or fix |
+| `style:`    | Formatting, whitespace, Prettier-only  |
+| `docs:`     | Documentation or AGENTS.md changes     |
+| `chore:`    | Dependencies, tooling, config, build   |
 
 Keep the subject line concise and lowercase after the prefix, e.g. `feat: add hue shift slider`.
 

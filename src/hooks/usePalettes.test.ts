@@ -132,7 +132,7 @@ describe('usePalettes', () => {
     const originalHues = result.current.palettes[0].colors.map((c) => c.h);
     act(() => result.current.applyHueShift('a', 10));
     result.current.palettes[0].colors.forEach((c, i) => {
-      expect(c.h).toBe(((originalHues[i] + 10) % 360 + 360) % 360);
+      expect(c.h).toBe((((originalHues[i] + 10) % 360) + 360) % 360);
     });
   });
 

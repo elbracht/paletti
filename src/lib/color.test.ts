@@ -1,12 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  hslToOklch,
-  oklchToHsl,
-  hexToHsl,
-  hslToCss,
-  hueToName,
-  clamp,
-} from '@/lib/color';
+import { hslToOklch, oklchToHsl, hexToHsl, hslToCss, hueToName, clamp } from '@/lib/color';
 
 describe('hslToOklch', () => {
   it('converts pure white correctly', () => {
@@ -82,6 +75,20 @@ describe('hexToHsl', () => {
       expect(result[1]).toBe(100); // fully saturated
       expect(result[2]).toBe(50); // mid lightness
     }
+  });
+
+  it('parses hex values across all hue ranges', () => {
+    // Each test covers a different hslToRgb branch
+    const yellowGreen = hexToHsl('#80ff00'); // h ≈ 90  (60–119)
+    expect(yellowGreen![0]).toBe(90);
+    const green = hexToHsl('#00ff00'); // h = 120 (120–179)
+    expect(green![0]).toBe(120);
+    const cyan = hexToHsl('#00ffff'); // h = 180 (180–239)
+    expect(cyan![0]).toBe(180);
+    const blue = hexToHsl('#0000ff'); // h = 240 (240–299)
+    expect(blue![0]).toBe(240);
+    const magenta = hexToHsl('#ff00ff'); // h = 300 (300–359)
+    expect(magenta![0]).toBe(300);
   });
 
   it('parses a 3-digit hex', () => {

@@ -64,10 +64,9 @@ describe('useUrlSync', () => {
     mockUseSearchParams.mockReturnValue({ get: () => null });
 
     const onLoad = vi.fn();
-    const { rerender } = renderHook(
-      ({ palettes }) => useUrlSync({ palettes, onLoad }),
-      { initialProps: { palettes: [mockPalette] } },
-    );
+    const { rerender } = renderHook(({ palettes }) => useUrlSync({ palettes, onLoad }), {
+      initialProps: { palettes: [mockPalette] },
+    });
 
     expect(replaceState).toHaveBeenCalledTimes(1);
 
@@ -88,10 +87,9 @@ describe('useUrlSync', () => {
     mockUseSearchParams.mockReturnValue({ get: () => null });
 
     const onLoad = vi.fn();
-    const { rerender } = renderHook(
-      ({ palettes }) => useUrlSync({ palettes, onLoad }),
-      { initialProps: { palettes: [mockPalette] } },
-    );
+    const { rerender } = renderHook(({ palettes }) => useUrlSync({ palettes, onLoad }), {
+      initialProps: { palettes: [mockPalette] },
+    });
 
     expect(replaceState).toHaveBeenCalledTimes(1);
 
