@@ -46,6 +46,25 @@ This project uses **Tailwind CSS v4** (`@tailwindcss/postcss`), not v3. Key diff
 - Import supports **oklch() CSS strings** and **hex** via `oklchToHsl()` / `hexToHsl()`
 - Tailwind v4 `@theme` block import: parses `--color-{name}-{shade}` vars in `src/lib/import.ts`
 
+## Formatting
+
+- Code formatted with **Prettier** (config in `.prettierrc`). Run `npx prettier --write .` before committing.
+
+## Commit conventions
+
+Use semantic commits with one of these prefixes:
+
+| Prefix   | When to use                                |
+|----------|--------------------------------------------|
+| `feat:`  | New feature or user-facing addition        |
+| `fix:`   | Bug fix                                    |
+| `refactor:` | Code change without new feature or fix  |
+| `style:` | Formatting, whitespace, Prettier-only      |
+| `docs:`  | Documentation or AGENTS.md changes         |
+| `chore:` | Dependencies, tooling, config, build       |
+
+Keep the subject line concise and lowercase after the prefix, e.g. `feat: add hue shift slider`.
+
 ## Path alias
 
 `@/*` maps to `./src/*` (configured in both `tsconfig.json` and `vitest.config.ts`).
