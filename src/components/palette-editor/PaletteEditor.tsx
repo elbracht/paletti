@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Palette } from "@/types/palette";
 import { PaletteName } from "@/components/palette-list/PaletteName";
 import { HslChart } from "./HslChart";
-import { ShiftSlider } from "./HueShiftSlider";
+import { ShiftSlider } from "./ShiftSlider";
 import { HslTable } from "./HslTable";
 import { ExportPanel } from "./ExportPanel";
 import { ThemeToggle } from "@/components/ThemeToggle";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducer, useCallback } from "react";
-import { Palette, ColorStop, SHADES } from "@/types/palette";
+import { Palette } from "@/types/palette";
 import {
   createPalette,
   applyHueShift,
