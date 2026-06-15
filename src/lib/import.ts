@@ -1,5 +1,5 @@
-import { oklchToHsl, hexToHsl } from "./color";
-import { Palette, ColorStop, SHADES } from "@/types/palette";
+import { oklchToHsl, hexToHsl } from './color';
+import { Palette, ColorStop, SHADES } from '@/types/palette';
 
 /**
  * Parse a color value string (oklch or hex) into [H, S, L].
@@ -7,8 +7,8 @@ import { Palette, ColorStop, SHADES } from "@/types/palette";
  */
 function parseColorValue(value: string): [number, number, number] | null {
   const v = value.trim();
-  if (v.startsWith("oklch(")) return oklchToHsl(v);
-  if (v.startsWith("#")) return hexToHsl(v);
+  if (v.startsWith('oklch(')) return oklchToHsl(v);
+  if (v.startsWith('#')) return hexToHsl(v);
   return null;
 }
 
@@ -51,9 +51,9 @@ export function parseTailwindConfig(css: string): Palette[] | null {
     palettes.push({
       id: `palette-${counter++}`,
       name: name
-        .split("-")
+        .split('-')
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(" "),
+        .join(' '),
       colors,
     });
   }

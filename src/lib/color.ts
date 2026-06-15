@@ -53,11 +53,7 @@ function toLinear(c: number): number {
 
 // ─── Linear sRGB → XYZ D65 ───────────────────────────────────────────────────
 
-function linearRgbToXyz(
-  r: number,
-  g: number,
-  b: number,
-): [number, number, number] {
+function linearRgbToXyz(r: number, g: number, b: number): [number, number, number] {
   const x = 0.4124564 * r + 0.3575761 * g + 0.1804375 * b;
   const y = 0.2126729 * r + 0.7151522 * g + 0.072175 * b;
   const z = 0.0193339 * r + 0.119192 * g + 0.9503041 * b;
@@ -80,11 +76,7 @@ function xyzToOklab(x: number, y: number, z: number): [number, number, number] {
 
 // ─── Oklab → oklch ───────────────────────────────────────────────────────────
 
-function oklabToOklch(
-  L: number,
-  a: number,
-  b: number,
-): [number, number, number] {
+function oklabToOklch(L: number, a: number, b: number): [number, number, number] {
   const C = Math.sqrt(a * a + b * b);
   let H = (Math.atan2(b, a) * 180) / Math.PI;
   if (H < 0) H += 360;
@@ -103,13 +95,13 @@ function oklchToOklab(L: number, C: number, H: number): [number, number, number]
 function oklabToXyz(L: number, a: number, b: number): [number, number, number] {
   const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
   const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
-  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+  const s_ = L - 0.0894841775 * a - 1.291485548 * b;
   const l = l_ * l_ * l_;
   const m = m_ * m_ * m_;
   const s = s_ * s_ * s_;
   // Correct M1-inverse: LMS [1,1,1] → XYZ D65 white [0.9505, 1.0, 1.089]
   return [
-     1.2270138511035211 * l - 0.5577999806518222 * m + 0.2812561489664678 * s,
+    1.2270138511035211 * l - 0.5577999806518222 * m + 0.2812561489664678 * s,
     -0.0405801784232806 * l + 1.1122568696168302 * m - 0.0716766786656012 * s,
     -0.0763812845057069 * l - 0.4214819784180127 * m + 1.5861632204407947 * s,
   ];
@@ -119,9 +111,9 @@ function oklabToXyz(L: number, a: number, b: number): [number, number, number] {
 
 function xyzToLinearRgb(x: number, y: number, z: number): [number, number, number] {
   return [
-     3.2404542 * x - 1.5371385 * y - 0.4985314 * z,
-    -0.9692660 * x + 1.8760108 * y + 0.0415560 * z,
-     0.0556434 * x - 0.2040259 * y + 1.0572252 * z,
+    3.2404542 * x - 1.5371385 * y - 0.4985314 * z,
+    -0.969266 * x + 1.8760108 * y + 0.041556 * z,
+    0.0556434 * x - 0.2040259 * y + 1.0572252 * z,
   ];
 }
 
@@ -161,15 +153,14 @@ function oklchToInGamutRgb(L: number, C: number, H: number): [number, number, nu
   };
 
   const inGamut = ([r, g, b]: [number, number, number]) =>
-    r >= -1e-4 && r <= 1 + 1e-4 &&
-    g >= -1e-4 && g <= 1 + 1e-4 &&
-    b >= -1e-4 && b <= 1 + 1e-4;
+    r >= -1e-4 && r <= 1 + 1e-4 && g >= -1e-4 && g <= 1 + 1e-4 && b >= -1e-4 && b <= 1 + 1e-4;
 
   let [rl, gl, bl] = toRgb(L, C, H);
 
   if (!inGamut([rl, gl, bl])) {
     // Binary-search for the largest in-gamut chroma
-    let lo = 0, hi = C;
+    let lo = 0,
+      hi = C;
     for (let i = 0; i < 24; i++) {
       const mid = (lo + hi) / 2;
       if (inGamut(toRgb(L, mid, H))) lo = mid;
@@ -191,7 +182,7 @@ export function oklchToHsl(oklchStr: string): [number, number, number] | null {
   if (!m) return null;
   const raw = parseFloat(m[1]);
   // L is either a percentage (62.3%) or a 0–1 value (0.623)
-  const L = m[2] === "%" ? raw / 100 : raw;
+  const L = m[2] === '%' ? raw / 100 : raw;
   const C = parseFloat(m[3]);
   const H = parseFloat(m[4]);
   const [r, g, b] = oklchToInGamutRgb(L, C, H);
@@ -203,15 +194,17 @@ export function hexToHsl(hex: string): [number, number, number] | null {
   const m = hex.match(/^#([0-9a-f]{3,8})$/i);
   if (!m) return null;
   let h = m[1];
-  if (h.length === 3) h = h.split("").map((c) => c + c).join("");
+  if (h.length === 3)
+    h = h
+      .split('')
+      .map((c) => c + c)
+      .join('');
   if (h.length !== 6) return null;
   const r = parseInt(h.slice(0, 2), 16) / 255;
   const g = parseInt(h.slice(2, 4), 16) / 255;
   const b = parseInt(h.slice(4, 6), 16) / 255;
   return rgbToHsl(r, g, b);
 }
-
-
 
 /** Convert HSL values to an oklch CSS string, e.g. `oklch(56.3% 0.172 142.5)` */
 export function hslToOklch(h: number, s: number, l: number): string {
@@ -236,14 +229,14 @@ export function hslToCss(h: number, s: number, l: number): string {
 /** Determine an auto-name for a palette based on hue of the 500 shade */
 export function hueToName(h: number): string {
   const hue = ((h % 360) + 360) % 360;
-  if (hue <= 15 || hue > 345) return "Red";
-  if (hue <= 44) return "Orange";
-  if (hue <= 65) return "Yellow";
-  if (hue <= 150) return "Green";
-  if (hue <= 200) return "Cyan";
-  if (hue <= 260) return "Blue";
-  if (hue <= 290) return "Violet";
-  return "Pink";
+  if (hue <= 15 || hue > 345) return 'Red';
+  if (hue <= 44) return 'Orange';
+  if (hue <= 65) return 'Yellow';
+  if (hue <= 150) return 'Green';
+  if (hue <= 200) return 'Cyan';
+  if (hue <= 260) return 'Blue';
+  if (hue <= 290) return 'Violet';
+  return 'Pink';
 }
 
 function round(value: number, decimals: number): number {

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -34,20 +34,20 @@ body {
 }
 
 /* Shift slider — plain track, no fill */
-input[type="range"].shift-slider {
+input[type='range'].shift-slider {
   appearance: none;
   -webkit-appearance: none;
   background: transparent;
   height: 16px;
 }
 
-input[type="range"].shift-slider::-webkit-slider-runnable-track {
+input[type='range'].shift-slider::-webkit-slider-runnable-track {
   height: 2px;
   background: #d4d4d8;
   border-radius: 1px;
 }
 
-input[type="range"].shift-slider::-webkit-slider-thumb {
+input[type='range'].shift-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 14px;
   height: 14px;
@@ -57,13 +57,13 @@ input[type="range"].shift-slider::-webkit-slider-thumb {
   cursor: pointer;
 }
 
-input[type="range"].shift-slider::-moz-range-track {
+input[type='range'].shift-slider::-moz-range-track {
   height: 2px;
   background: #d4d4d8;
   border-radius: 1px;
 }
 
-input[type="range"].shift-slider::-moz-range-thumb {
+input[type='range'].shift-slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -72,18 +72,18 @@ input[type="range"].shift-slider::-moz-range-thumb {
   cursor: pointer;
 }
 
-.dark input[type="range"].shift-slider::-webkit-slider-runnable-track {
+.dark input[type='range'].shift-slider::-webkit-slider-runnable-track {
   background: #52525b;
 }
 
-.dark input[type="range"].shift-slider::-webkit-slider-thumb {
+.dark input[type='range'].shift-slider::-webkit-slider-thumb {
   background: #d4d4d8;
 }
 
-.dark input[type="range"].shift-slider::-moz-range-track {
+.dark input[type='range'].shift-slider::-moz-range-track {
   background: #52525b;
 }
 
-.dark input[type="range"].shift-slider::-moz-range-thumb {
+.dark input[type='range'].shift-slider::-moz-range-thumb {
   background: #d4d4d8;
 }

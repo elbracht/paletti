@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Palette } from "@/types/palette";
-import { PaletteName } from "@/components/palette-list/PaletteName";
-import { HslChart } from "./HslChart";
-import { ShiftSlider } from "./ShiftSlider";
-import { HslTable } from "./HslTable";
-import { ExportPanel } from "./ExportPanel";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { useState } from 'react';
+import { Palette } from '@/types/palette';
+import { PaletteName } from '@/components/palette-list/PaletteName';
+import { HslChart } from './HslChart';
+import { ShiftSlider } from './ShiftSlider';
+import { HslTable } from './HslTable';
+import { ExportPanel } from './ExportPanel';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface PaletteEditorProps {
   palette: Palette;
   allPalettes: Palette[];
   onRename: (name: string) => void;
-  onUpdateColor: (shade: number, field: "h" | "s" | "l", value: number) => void;
+  onUpdateColor: (shade: number, field: 'h' | 's' | 'l', value: number) => void;
   onHueShift: (delta: number) => void;
   onSaturationShift: (delta: number) => void;
   onLightnessShift: (delta: number) => void;
@@ -39,7 +39,7 @@ export function PaletteEditor({
   onSaturationShift,
   onLightnessShift,
 }: PaletteEditorProps) {
-  const [slidingField, setSlidingField] = useState<"h" | "s" | "l" | null>(null);
+  const [slidingField, setSlidingField] = useState<'h' | 's' | 'l' | null>(null);
 
   const hues = palette.colors.map((c) => c.h);
   const sats = palette.colors.map((c) => c.s);
@@ -57,7 +57,7 @@ export function PaletteEditor({
   const lightSliderMin = lightAvg - Math.min(...lights);
   const lightSliderMax = lightAvg + (100 - Math.max(...lights));
 
-  function onSliderPointerDown(field: "h" | "s" | "l") {
+  function onSliderPointerDown(field: 'h' | 's' | 'l') {
     return () => setSlidingField(field);
   }
 
@@ -91,7 +91,7 @@ export function PaletteEditor({
                 min={hueSliderMin}
                 max={hueSliderMax}
                 onChange={(newAvg) => onHueShift(newAvg - hueAvg)}
-                onPointerDown={onSliderPointerDown("h")}
+                onPointerDown={onSliderPointerDown('h')}
                 onPointerUp={onSliderPointerUp}
               />
             </div>
@@ -100,8 +100,8 @@ export function PaletteEditor({
               field="h"
               min={0}
               max={360}
-              onChange={(shade, value) => onUpdateColor(shade, "h", value)}
-              showAllLabels={slidingField === "h"}
+              onChange={(shade, value) => onUpdateColor(shade, 'h', value)}
+              showAllLabels={slidingField === 'h'}
             />
           </div>
 
@@ -113,7 +113,7 @@ export function PaletteEditor({
                 min={satSliderMin}
                 max={satSliderMax}
                 onChange={(newAvg) => onSaturationShift(newAvg - satAvg)}
-                onPointerDown={onSliderPointerDown("s")}
+                onPointerDown={onSliderPointerDown('s')}
                 onPointerUp={onSliderPointerUp}
               />
             </div>
@@ -122,8 +122,8 @@ export function PaletteEditor({
               field="s"
               min={0}
               max={100}
-              onChange={(shade, value) => onUpdateColor(shade, "s", value)}
-              showAllLabels={slidingField === "s"}
+              onChange={(shade, value) => onUpdateColor(shade, 's', value)}
+              showAllLabels={slidingField === 's'}
             />
           </div>
 
@@ -135,7 +135,7 @@ export function PaletteEditor({
                 min={lightSliderMin}
                 max={lightSliderMax}
                 onChange={(newAvg) => onLightnessShift(newAvg - lightAvg)}
-                onPointerDown={onSliderPointerDown("l")}
+                onPointerDown={onSliderPointerDown('l')}
                 onPointerUp={onSliderPointerUp}
               />
             </div>
@@ -144,8 +144,8 @@ export function PaletteEditor({
               field="l"
               min={0}
               max={100}
-              onChange={(shade, value) => onUpdateColor(shade, "l", value)}
-              showAllLabels={slidingField === "l"}
+              onChange={(shade, value) => onUpdateColor(shade, 'l', value)}
+              showAllLabels={slidingField === 'l'}
             />
           </div>
 

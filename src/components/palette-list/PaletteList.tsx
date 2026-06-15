@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import { Palette } from "@/types/palette";
-import { PaletteCard } from "./PaletteCard";
-import { AddPaletteButton } from "./AddPaletteButton";
+import { useRef, useState } from 'react';
+import { Palette } from '@/types/palette';
+import { PaletteCard } from './PaletteCard';
+import { AddPaletteButton } from './AddPaletteButton';
 
 interface PaletteListProps {
   palettes: Palette[];
@@ -36,12 +36,12 @@ export function PaletteList({
     // Create a custom drag image that respects border-radius
     const el = e.currentTarget as HTMLElement;
     const ghost = el.cloneNode(true) as HTMLElement;
-    ghost.style.position = "fixed";
-    ghost.style.top = "-1000px";
+    ghost.style.position = 'fixed';
+    ghost.style.top = '-1000px';
     ghost.style.width = `${el.offsetWidth}px`;
-    ghost.style.borderRadius = "12px";
-    ghost.style.overflow = "hidden";
-    ghost.style.pointerEvents = "none";
+    ghost.style.borderRadius = '12px';
+    ghost.style.overflow = 'hidden';
+    ghost.style.pointerEvents = 'none';
     document.body.appendChild(ghost);
     e.dataTransfer.setDragImage(ghost, el.offsetWidth / 2, el.offsetHeight / 2);
     setTimeout(() => document.body.removeChild(ghost), 0);
@@ -80,10 +80,8 @@ export function PaletteList({
       onDragOver={(e) => {
         e.preventDefault();
         if (palettes.length === 0) return;
-        const firstCard = e.currentTarget.querySelector(
-          "[draggable]",
-        ) as HTMLElement;
-        const lastCard = e.currentTarget.querySelectorAll("[draggable]");
+        const firstCard = e.currentTarget.querySelector('[draggable]') as HTMLElement;
+        const lastCard = e.currentTarget.querySelectorAll('[draggable]');
         const last = lastCard[lastCard.length - 1] as HTMLElement;
         if (firstCard && e.clientY < firstCard.getBoundingClientRect().top) {
           setDragOverIndex(0);
@@ -111,10 +109,8 @@ export function PaletteList({
         onDragOver={(e) => {
           e.preventDefault();
           if (palettes.length === 0) return;
-          const firstCard = e.currentTarget.querySelector(
-            "[draggable]",
-          ) as HTMLElement;
-          const lastCard = e.currentTarget.querySelectorAll("[draggable]");
+          const firstCard = e.currentTarget.querySelector('[draggable]') as HTMLElement;
+          const lastCard = e.currentTarget.querySelectorAll('[draggable]');
           const last = lastCard[lastCard.length - 1] as HTMLElement;
           if (firstCard && e.clientY < firstCard.getBoundingClientRect().top) {
             setDragOverIndex(0);
@@ -141,14 +137,14 @@ export function PaletteList({
               onDrop={() => handleDrop(index)}
               onDragEnd={handleDragEnd}
               className={`relative transition-opacity ${
-                activeDragIndex === index ? "opacity-40" : "opacity-100"
+                activeDragIndex === index ? 'opacity-40' : 'opacity-100'
               }`}
             >
               {/* Line centered in the gap above (gap=8px → -5px centers a 2px line) */}
               {dragOverIndex === index && (
                 <div
                   className="pointer-events-none absolute right-0 left-0 z-10 h-0.5 rounded-full bg-zinc-700 dark:bg-zinc-300"
-                  style={{ top: index === 0 ? "-3px" : "-5px" }}
+                  style={{ top: index === 0 ? '-3px' : '-5px' }}
                 />
               )}
               <PaletteCard
@@ -159,13 +155,12 @@ export function PaletteList({
                 onDelete={() => onDelete(palette.id)}
               />
               {/* Line below last card */}
-              {dragOverIndex === palettes.length &&
-                index === palettes.length - 1 && (
-                  <div
-                    className="pointer-events-none absolute right-0 left-0 z-10 h-0.5 rounded-full bg-zinc-700 dark:bg-zinc-300"
-                    style={{ bottom: "-5px" }}
-                  />
-                )}
+              {dragOverIndex === palettes.length && index === palettes.length - 1 && (
+                <div
+                  className="pointer-events-none absolute right-0 left-0 z-10 h-0.5 rounded-full bg-zinc-700 dark:bg-zinc-300"
+                  style={{ bottom: '-5px' }}
+                />
+              )}
             </div>
           ))}
         </div>

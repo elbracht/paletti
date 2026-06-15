@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 interface ShiftSliderProps {
   value: number;
@@ -9,7 +9,14 @@ interface ShiftSliderProps {
   onPointerUp?: (e: React.PointerEvent<HTMLInputElement>) => void;
 }
 
-export function ShiftSlider({ value, min, max, onChange, onPointerDown, onPointerUp }: ShiftSliderProps) {
+export function ShiftSlider({
+  value,
+  min,
+  max,
+  onChange,
+  onPointerDown,
+  onPointerUp,
+}: ShiftSliderProps) {
   return (
     <input
       type="range"

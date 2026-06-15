@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { ColorStop } from "@/types/palette";
-import { hslToCss } from "@/lib/color";
+import { ColorStop } from '@/types/palette';
+import { hslToCss } from '@/lib/color';
 
 interface HslTableProps {
   colors: ColorStop[];
-  onChange: (shade: number, field: "h" | "s" | "l", value: number) => void;
+  onChange: (shade: number, field: 'h' | 's' | 'l', value: number) => void;
 }
 
 export function HslTable({ colors, onChange }: HslTableProps) {
-  function handleInput(shade: number, field: "h" | "s" | "l", raw: string) {
+  function handleInput(shade: number, field: 'h' | 's' | 'l', raw: string) {
     const val = parseInt(raw, 10);
     if (!isNaN(val)) onChange(shade, field, val);
   }
@@ -32,20 +32,20 @@ export function HslTable({ colors, onChange }: HslTableProps) {
                 className="rounded px-2 py-1 text-xs font-semibold text-center"
                 style={{
                   backgroundColor: hslToCss(c.h, c.s, c.l),
-                  color: c.l > 55 ? "#1a1a1a" : "#ffffff",
-                  minWidth: "3rem",
+                  color: c.l > 55 ? '#1a1a1a' : '#ffffff',
+                  minWidth: '3rem',
                 }}
               >
                 {c.shade}
               </div>
             </td>
-            {(["h", "s", "l"] as const).map((field) => (
+            {(['h', 's', 'l'] as const).map((field) => (
               <td key={field} className="py-1 pl-2">
                 <input
                   type="number"
                   value={Math.round(c[field])}
                   min={0}
-                  max={field === "h" ? 360 : 100}
+                  max={field === 'h' ? 360 : 100}
                   onChange={(e) => handleInput(c.shade, field, e.target.value)}
                   className="w-full rounded bg-transparent px-1 py-0.5 text-left tabular-nums text-zinc-700 hover:bg-zinc-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-zinc-300 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:focus:bg-zinc-900 dark:focus:ring-zinc-600"
                 />

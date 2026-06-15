@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { usePalettes } from "@/hooks/usePalettes";
-import { useUrlSync } from "@/hooks/useUrlSync";
-import { PaletteList } from "@/components/palette-list/PaletteList";
-import { PaletteEditor } from "@/components/palette-editor/PaletteEditor";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { usePalettes } from '@/hooks/usePalettes';
+import { useUrlSync } from '@/hooks/useUrlSync';
+import { PaletteList } from '@/components/palette-list/PaletteList';
+import { PaletteEditor } from '@/components/palette-editor/PaletteEditor';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function AppContent() {
   const {
@@ -52,12 +52,8 @@ export default function AppContent() {
               updateColor(selectedPalette.id, shade, field, value)
             }
             onHueShift={(delta) => applyHueShift(selectedPalette.id, delta)}
-            onSaturationShift={(delta) =>
-              applySaturationShift(selectedPalette.id, delta)
-            }
-            onLightnessShift={(delta) =>
-              applyLightnessShift(selectedPalette.id, delta)
-            }
+            onSaturationShift={(delta) => applySaturationShift(selectedPalette.id, delta)}
+            onLightnessShift={(delta) => applyLightnessShift(selectedPalette.id, delta)}
           />
         ) : (
           <div className="flex flex-col h-full">

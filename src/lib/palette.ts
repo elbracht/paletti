@@ -1,4 +1,4 @@
-import { Palette, ColorStop, SHADES } from "@/types/palette";
+import { Palette, ColorStop, SHADES } from '@/types/palette';
 
 /** Default HSL values for a new palette (a pleasant blue) */
 const DEFAULT_HSL: Array<[number, number, number]> = [
@@ -28,7 +28,7 @@ export function createPalette(id: string): Palette {
   const colors = createDefaultColors();
   return {
     id,
-    name: "Unknown",
+    name: 'Unknown',
     colors,
   };
 }
@@ -42,10 +42,7 @@ export function applyHueShift(colors: ColorStop[], delta: number): ColorStop[] {
 }
 
 /** Shift all saturation values by `delta`, clamped to [0, 100] */
-export function applySaturationShift(
-  colors: ColorStop[],
-  delta: number,
-): ColorStop[] {
+export function applySaturationShift(colors: ColorStop[], delta: number): ColorStop[] {
   return colors.map((c) => ({
     ...c,
     s: Math.max(0, Math.min(100, c.s + delta)),
@@ -53,10 +50,7 @@ export function applySaturationShift(
 }
 
 /** Shift all lightness values by `delta`, clamped to [0, 100] */
-export function applyLightnessShift(
-  colors: ColorStop[],
-  delta: number,
-): ColorStop[] {
+export function applyLightnessShift(colors: ColorStop[], delta: number): ColorStop[] {
   return colors.map((c) => ({
     ...c,
     l: Math.max(0, Math.min(100, c.l + delta)),

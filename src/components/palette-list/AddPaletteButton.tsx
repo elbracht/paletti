@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faChevronDown, faFileImport, faXmark } from "@fortawesome/pro-solid-svg-icons";
-import { Palette } from "@/types/palette";
-import { parseTailwindConfig } from "@/lib/import";
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faChevronDown, faFileImport, faXmark } from '@fortawesome/pro-solid-svg-icons';
+import { Palette } from '@/types/palette';
+import { parseTailwindConfig } from '@/lib/import';
 
 interface AddPaletteButtonProps {
   onAdd: () => void;
@@ -14,12 +14,12 @@ interface AddPaletteButtonProps {
 export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [css, setCss] = useState("");
+  const [css, setCss] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   function openImport() {
     setDropdownOpen(false);
-    setCss("");
+    setCss('');
     setError(null);
     setModalOpen(true);
   }
@@ -27,7 +27,9 @@ export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
   function handleImport() {
     const result = parseTailwindConfig(css);
     if (!result) {
-      setError("No valid color palettes found. Make sure your CSS contains --color-{name}-{shade}: oklch(...) variables.");
+      setError(
+        'No valid color palettes found. Make sure your CSS contains --color-{name}-{shade}: oklch(...) variables.',
+      );
       return;
     }
     onImport(result);
@@ -81,7 +83,9 @@ export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-zinc-200 px-5 py-4 dark:border-zinc-800">
-              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Import — Tailwind v4 CSS</p>
+              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                Import — Tailwind v4 CSS
+              </p>
               <button
                 onClick={() => setModalOpen(false)}
                 className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
@@ -92,13 +96,23 @@ export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
 
             <div className="p-5 flex-1 overflow-y-auto flex flex-col gap-3">
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                Paste your Tailwind v4 <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">@theme</code> block containing <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">--color-*</code> variables in <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">oklch()</code> format.
+                Paste your Tailwind v4{' '}
+                <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">@theme</code> block
+                containing{' '}
+                <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">--color-*</code>{' '}
+                variables in{' '}
+                <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">oklch()</code> format.
               </p>
               <textarea
                 className="min-h-48 w-full flex-1 resize-none rounded-lg border border-zinc-200 bg-zinc-50 p-3 font-mono text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:focus:ring-zinc-600"
-                placeholder={"@theme {\n  --color-primary-50: oklch(97.8% 0.013 236.6);\n  --color-primary-100: oklch(95.2% 0.026 236.8);\n  ...\n}"}
+                placeholder={
+                  '@theme {\n  --color-primary-50: oklch(97.8% 0.013 236.6);\n  --color-primary-100: oklch(95.2% 0.026 236.8);\n  ...\n}'
+                }
                 value={css}
-                onChange={(e) => { setCss(e.target.value); setError(null); }}
+                onChange={(e) => {
+                  setCss(e.target.value);
+                  setError(null);
+                }}
                 spellCheck={false}
               />
               {error && <p className="text-xs text-red-500">{error}</p>}

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
-import { Palette } from "@/types/palette";
-import { encodePalettes, decodePalettes } from "@/lib/url-state";
+import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Palette } from '@/types/palette';
+import { encodePalettes, decodePalettes } from '@/lib/url-state';
 
 interface UseUrlSyncOptions {
   palettes: Palette[];
@@ -19,13 +19,13 @@ export function useUrlSync({ palettes, onLoad }: UseUrlSyncOptions) {
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
-    const p = searchParams.get("p");
+    const p = searchParams.get('p');
     if (p) {
       lastEncoded.current = p;
       const decoded = decodePalettes(p);
       if (decoded) onLoad(decoded);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // On palette change: encode and update URL via replaceState (no re-render)
@@ -34,6 +34,6 @@ export function useUrlSync({ palettes, onLoad }: UseUrlSyncOptions) {
     const encoded = encodePalettes(palettes);
     if (encoded === lastEncoded.current) return;
     lastEncoded.current = encoded;
-    window.history.replaceState(null, "", `?p=${encoded}`);
+    window.history.replaceState(null, '', `?p=${encoded}`);
   }, [palettes]);
 }

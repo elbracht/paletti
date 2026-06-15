@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/pro-solid-svg-icons";
-import { Palette } from "@/types/palette";
-import { PaletteName } from "./PaletteName";
-import { hslToCss } from "@/lib/color";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/pro-solid-svg-icons';
+import { Palette } from '@/types/palette';
+import { PaletteName } from './PaletteName';
+import { hslToCss } from '@/lib/color';
 
 interface PaletteCardProps {
   palette: Palette;
@@ -26,8 +26,8 @@ export function PaletteCard({
       onClick={onSelect}
       className={`group cursor-pointer rounded-xl border p-3 transition-all ${
         isSelected
-          ? "border-zinc-700 bg-white shadow-md dark:border-zinc-400 dark:bg-zinc-800"
-          : "border-zinc-200 bg-white hover:border-zinc-400 hover:shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-zinc-500"
+          ? 'border-zinc-700 bg-white shadow-md dark:border-zinc-400 dark:bg-zinc-800'
+          : 'border-zinc-200 bg-white hover:border-zinc-400 hover:shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-zinc-500'
       }`}
     >
       {/* Color swatches */}

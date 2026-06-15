@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useRef, useState, useEffect } from "react";
-import { ColorStop } from "@/types/palette";
-import { hslToCss, clamp } from "@/lib/color";
+import { useRef, useState, useEffect } from 'react';
+import { ColorStop } from '@/types/palette';
+import { hslToCss, clamp } from '@/lib/color';
 
 interface HslChartProps {
   colors: ColorStop[];
-  field: "h" | "s" | "l";
+  field: 'h' | 's' | 'l';
   min: number;
   max: number;
   onChange: (shade: number, value: number) => void;
@@ -75,7 +75,7 @@ export function HslChart({ colors, field, min, max, onChange, showAllLabels }: H
         ref={svgRef}
         width="100%"
         height={SVG_H}
-        style={{ display: "block", touchAction: "none", overflow: "visible" }}
+        style={{ display: 'block', touchAction: 'none', overflow: 'visible' }}
         onPointerMove={onPointerMove}
         onPointerUp={() => setDragging(null)}
         onPointerLeave={() => setDragging(null)}
@@ -91,8 +91,21 @@ export function HslChart({ colors, field, min, max, onChange, showAllLabels }: H
           const y = valueToY(value);
           return (
             <g key={i}>
-              <line x1={PAD.left} x2={width - PAD.right} y1={y} y2={y} stroke="var(--chart-grid)" strokeDasharray="4 4" />
-              <text x={PAD.left - 6} y={y + 4} textAnchor="end" fontSize="12" fill="var(--chart-text)">
+              <line
+                x1={PAD.left}
+                x2={width - PAD.right}
+                y1={y}
+                y2={y}
+                stroke="var(--chart-grid)"
+                strokeDasharray="4 4"
+              />
+              <text
+                x={PAD.left - 6}
+                y={y + 4}
+                textAnchor="end"
+                fontSize="12"
+                fill="var(--chart-text)"
+              >
                 {Math.round(value)}
               </text>
             </g>
@@ -101,7 +114,7 @@ export function HslChart({ colors, field, min, max, onChange, showAllLabels }: H
 
         {/* Connection line */}
         <polyline
-          points={colors.map((c, i) => `${dotX(i)},${valueToY(c[field])}`).join(" ")}
+          points={colors.map((c, i) => `${dotX(i)},${valueToY(c[field])}`).join(' ')}
           fill="none"
           stroke="var(--chart-line)"
           strokeWidth="1.5"
@@ -117,16 +130,18 @@ export function HslChart({ colors, field, min, max, onChange, showAllLabels }: H
           return (
             <g key={c.shade}>
               <circle
-                cx={x} cy={y} r={DOT_RADIUS}
+                cx={x}
+                cy={y}
+                r={DOT_RADIUS}
                 fill={hslToCss(c.h, c.s, c.l)}
                 stroke="white"
                 strokeWidth="1.5"
                 filter="url(#dot-shadow)"
                 style={{
-                  cursor: "ns-resize",
-                  transform: isDragging ? `scale(1.2)` : "scale(1)",
+                  cursor: 'ns-resize',
+                  transform: isDragging ? `scale(1.2)` : 'scale(1)',
                   transformOrigin: `${x}px ${y}px`,
-                  transition: "transform 0.1s ease",
+                  transition: 'transform 0.1s ease',
                 }}
                 onPointerDown={(e) => onPointerDown(e, c.shade, c[field])}
                 onPointerEnter={() => setHovering(c.shade)}
@@ -140,7 +155,7 @@ export function HslChart({ colors, field, min, max, onChange, showAllLabels }: H
                   fontSize="13"
                   fontWeight="600"
                   fill="var(--chart-label)"
-                  style={{ pointerEvents: "none" }}
+                  style={{ pointerEvents: 'none' }}
                 >
                   {isDragging ? dragging.value : c[field]}
                 </text>

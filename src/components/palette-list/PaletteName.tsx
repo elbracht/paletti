@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/pro-solid-svg-icons";
+import { useState, useRef, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/pro-solid-svg-icons';
 
 interface PaletteNameProps {
   name: string;
@@ -10,11 +10,7 @@ interface PaletteNameProps {
   className?: string;
 }
 
-export function PaletteName({
-  name,
-  onChange,
-  className = "",
-}: PaletteNameProps) {
+export function PaletteName({ name, onChange, className = '' }: PaletteNameProps) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(name);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,8 +34,8 @@ export function PaletteName({
         onChange={(e) => setDraft(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => {
-          if (e.key === "Enter") commit();
-          if (e.key === "Escape") {
+          if (e.key === 'Enter') commit();
+          if (e.key === 'Escape') {
             setDraft(name);
             setEditing(false);
           }
