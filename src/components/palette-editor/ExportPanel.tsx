@@ -36,7 +36,7 @@ export function ExportPanel({ palettes }: ExportPanelProps) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
       >
         <FontAwesomeIcon icon={faUpRightFromSquare} className="text-xs" />
         Export
@@ -58,7 +58,7 @@ export function ExportPanel({ palettes }: ExportPanelProps) {
               <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Export — Tailwind v4</p>
               <button
                 onClick={() => setOpen(false)}
-                className="cursor-pointer text-zinc-400 transition-colors hover:text-zinc-700 dark:hover:text-zinc-200"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
                 aria-label="Close"
               >
                 <FontAwesomeIcon icon={faXmark} />

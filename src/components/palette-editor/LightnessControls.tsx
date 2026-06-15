@@ -13,14 +13,14 @@ export function LightnessControls({ onShift }: LightnessControlsProps) {
       <div className="flex items-center gap-1">
         <button
           onClick={() => onShift(-STEP)}
-          className="w-7 h-7 rounded-full border border-zinc-300 text-zinc-600 hover:bg-zinc-100 flex items-center justify-center text-base leading-none transition-colors cursor-pointer"
+          className="flex h-7 w-7 items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 cursor-pointer"
           aria-label="Decrease lightness"
         >
           −
         </button>
         <button
           onClick={() => onShift(STEP)}
-          className="w-7 h-7 rounded-full border border-zinc-300 text-zinc-600 hover:bg-zinc-100 flex items-center justify-center text-base leading-none transition-colors cursor-pointer"
+          className="flex h-7 w-7 items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 cursor-pointer"
           aria-label="Increase lightness"
         >
           +

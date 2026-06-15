@@ -37,10 +37,10 @@ export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
   return (
     <>
       {/* Split button */}
-      <div className="flex items-center rounded-lg bg-zinc-100 dark:bg-zinc-800">
+      <div className="flex items-center rounded-lg border border-zinc-200 dark:border-zinc-700">
         <button
           onClick={onAdd}
-          className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-l-lg text-zinc-600 transition-colors hover:bg-zinc-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-700"
+          className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-l-lg text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
           title="New palette"
         >
           <FontAwesomeIcon icon={faPlus} />
@@ -49,7 +49,7 @@ export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
         <div className="relative">
           <button
             onClick={() => setDropdownOpen((o) => !o)}
-            className="flex h-8 w-6 cursor-pointer items-center justify-center rounded-r-lg text-zinc-500 transition-colors hover:bg-zinc-200 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-700"
+            className="flex h-8 w-6 cursor-pointer items-center justify-center rounded-r-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
           >
             <FontAwesomeIcon icon={faChevronDown} className="text-xs" />
           </button>
@@ -59,7 +59,7 @@ export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
               <div className="absolute top-full right-0 z-30 mt-1 min-w-36 rounded-lg border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-800">
                 <button
                   onClick={openImport}
-                  className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                  className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-700"
                 >
                   <FontAwesomeIcon icon={faFileImport} className="text-zinc-400" />
                   Import CSS
@@ -84,7 +84,7 @@ export function AddPaletteButton({ onAdd, onImport }: AddPaletteButtonProps) {
               <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Import — Tailwind v4 CSS</p>
               <button
                 onClick={() => setModalOpen(false)}
-                className="cursor-pointer text-zinc-400 transition-colors hover:text-zinc-700 dark:hover:text-zinc-200"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
               >
                 <FontAwesomeIcon icon={faXmark} />
               </button>
