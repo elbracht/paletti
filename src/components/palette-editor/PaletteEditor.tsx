@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Palette } from "@/types/palette";
 import { PaletteName } from "@/components/palette-list/PaletteName";
 import { HslChart } from "./HslChart";
@@ -38,6 +39,8 @@ export function PaletteEditor({
   onSaturationShift,
   onLightnessShift,
 }: PaletteEditorProps) {
+  const [slidingField, setSlidingField] = useState<"h" | "s" | "l" | null>(null);
+
   const hues = palette.colors.map((c) => c.h);
   const sats = palette.colors.map((c) => c.s);
   const lights = palette.colors.map((c) => c.l);
@@ -53,6 +56,14 @@ export function PaletteEditor({
   const satSliderMax = satAvg + (100 - Math.max(...sats));
   const lightSliderMin = lightAvg - Math.min(...lights);
   const lightSliderMax = lightAvg + (100 - Math.max(...lights));
+
+  function onSliderPointerDown(field: "h" | "s" | "l") {
+    return () => setSlidingField(field);
+  }
+
+  function onSliderPointerUp() {
+    setSlidingField(null);
+  }
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
@@ -80,6 +91,8 @@ export function PaletteEditor({
                 min={hueSliderMin}
                 max={hueSliderMax}
                 onChange={(newAvg) => onHueShift(newAvg - hueAvg)}
+                onPointerDown={onSliderPointerDown("h")}
+                onPointerUp={onSliderPointerUp}
               />
             </div>
             <HslChart
@@ -88,6 +101,7 @@ export function PaletteEditor({
               min={0}
               max={360}
               onChange={(shade, value) => onUpdateColor(shade, "h", value)}
+              showAllLabels={slidingField === "h"}
             />
           </div>
 
@@ -99,6 +113,8 @@ export function PaletteEditor({
                 min={satSliderMin}
                 max={satSliderMax}
                 onChange={(newAvg) => onSaturationShift(newAvg - satAvg)}
+                onPointerDown={onSliderPointerDown("s")}
+                onPointerUp={onSliderPointerUp}
               />
             </div>
             <HslChart
@@ -107,6 +123,7 @@ export function PaletteEditor({
               min={0}
               max={100}
               onChange={(shade, value) => onUpdateColor(shade, "s", value)}
+              showAllLabels={slidingField === "s"}
             />
           </div>
 
@@ -118,6 +135,8 @@ export function PaletteEditor({
                 min={lightSliderMin}
                 max={lightSliderMax}
                 onChange={(newAvg) => onLightnessShift(newAvg - lightAvg)}
+                onPointerDown={onSliderPointerDown("l")}
+                onPointerUp={onSliderPointerUp}
               />
             </div>
             <HslChart
@@ -126,6 +145,7 @@ export function PaletteEditor({
               min={0}
               max={100}
               onChange={(shade, value) => onUpdateColor(shade, "l", value)}
+              showAllLabels={slidingField === "l"}
             />
           </div>
 

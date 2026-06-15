@@ -10,6 +10,7 @@ interface HslChartProps {
   min: number;
   max: number;
   onChange: (shade: number, value: number) => void;
+  showAllLabels?: boolean;
 }
 
 const CHART_H = 160;
@@ -20,7 +21,7 @@ const DOT_OFFSET_X = DOT_RADIUS + 2; // extra inset so dots don't clip label/edg
 
 const GRID_LINES = 5;
 
-export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
+export function HslChart({ colors, field, min, max, onChange, showAllLabels }: HslChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [width, setWidth] = useState(600);
@@ -112,7 +113,7 @@ export function HslChart({ colors, field, min, max, onChange }: HslChartProps) {
           const y = valueToY(c[field]);
           const isDragging = dragging?.shade === c.shade;
           const isHovering = hovering === c.shade;
-          const showLabel = isDragging || isHovering;
+          const showLabel = showAllLabels || isDragging || isHovering;
           return (
             <g key={c.shade}>
               <circle
