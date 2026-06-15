@@ -111,13 +111,7 @@ describe('PaletteList', () => {
     const onReorder = vi.fn();
     const palettes = [makePalette('a', 'First'), makePalette('b', 'Second')];
 
-    render(
-      <PaletteList
-        {...defaultProps}
-        palettes={palettes}
-        onReorder={onReorder}
-      />,
-    );
+    render(<PaletteList {...defaultProps} palettes={palettes} onReorder={onReorder} />);
 
     const items = screen.getAllByText(/First|Second/);
     const firstItem = items[0].closest('[draggable]')!;
@@ -136,11 +130,7 @@ describe('PaletteList', () => {
     const palettes = [makePalette('a', 'First')];
 
     const { container } = render(
-      <PaletteList
-        {...defaultProps}
-        palettes={palettes}
-        onReorder={vi.fn()}
-      />,
+      <PaletteList {...defaultProps} palettes={palettes} onReorder={vi.fn()} />,
     );
 
     const aside = container.querySelector('aside')!;
@@ -149,7 +139,17 @@ describe('PaletteList', () => {
 
     // Drag over the aside, above the first card
     Object.defineProperty(scrollEl, 'getBoundingClientRect', {
-      value: () => ({ top: 10, bottom: 110, left: 0, right: 300, width: 300, height: 100, x: 0, y: 0, toJSON: () => ({}) }),
+      value: () => ({
+        top: 10,
+        bottom: 110,
+        left: 0,
+        right: 300,
+        width: 300,
+        height: 100,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      }),
     });
     Object.defineProperty(rect, 'top', { value: 50 });
     Object.defineProperty(rect, 'bottom', { value: 150 });

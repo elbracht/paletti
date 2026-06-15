@@ -117,7 +117,15 @@ describe('HslChart', () => {
 
     // After pointerUp, dragging is null, so further pointerMove does not call onChange
     vi.spyOn(svg, 'getBoundingClientRect').mockReturnValue({
-      top: 0, left: 0, right: 600, bottom: 200, width: 600, height: 200, x: 0, y: 0, toJSON: () => ({}),
+      top: 0,
+      left: 0,
+      right: 600,
+      bottom: 200,
+      width: 600,
+      height: 200,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
     });
     const onChange = defaultProps.onChange;
     vi.clearAllMocks();

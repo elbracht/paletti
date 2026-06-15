@@ -94,7 +94,10 @@ describe('AddPaletteButton', () => {
     expect(screen.getByText('Import CSS')).toBeInTheDocument();
 
     // Click the dropdown backdrop
-    const dropdownBackdrop = screen.getByText('Import CSS').closest('.relative')!.querySelector('.fixed')!;
+    const dropdownBackdrop = screen
+      .getByText('Import CSS')
+      .closest('.relative')!
+      .querySelector('.fixed')!;
     fireEvent.click(dropdownBackdrop);
 
     expect(screen.queryByText('Import CSS')).not.toBeInTheDocument();
@@ -107,11 +110,12 @@ describe('AddPaletteButton', () => {
     fireEvent.click(screen.getByText('Import CSS'));
 
     // Find the close button inside the modal (it's the one with faXmark icon)
-    const closeBtn = screen.getByText('Import — Tailwind v4 CSS')
+    const closeBtn = screen
+      .getByText('Import — Tailwind v4 CSS')
       .closest('.rounded-2xl')!
       .querySelectorAll('button');
-    const xButton = Array.from(closeBtn).find(
-      (btn) => btn.querySelector('.svg-inline--fa.fa-xmark'),
+    const xButton = Array.from(closeBtn).find((btn) =>
+      btn.querySelector('.svg-inline--fa.fa-xmark'),
     )!;
     fireEvent.click(xButton);
 
