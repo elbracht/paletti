@@ -56,6 +56,22 @@ describe('ExportPanel', () => {
     expect(screen.queryByText('Export — Tailwind v4')).not.toBeInTheDocument();
   });
 
+  it('does not close when mouseDown on child and mouseUp on backdrop', () => {
+    render(<ExportPanel palettes={[mockPalette]} />);
+    fireEvent.click(screen.getByText('Export'));
+
+    // MouseDown on a child element (the modal content)
+    const modalContent = screen.getByText('Copy CSS');
+    fireEvent.mouseDown(modalContent);
+
+    // MouseUp on the backdrop
+    const backdrop = screen.getByText('Export — Tailwind v4').closest('.fixed')!;
+    fireEvent.mouseUp(backdrop);
+
+    // Modal should stay open
+    expect(screen.getByText('Export — Tailwind v4')).toBeInTheDocument();
+  });
+
   it('closes the modal when clicking the backdrop', () => {
     render(<ExportPanel palettes={[mockPalette]} />);
     fireEvent.click(screen.getByText('Export'));

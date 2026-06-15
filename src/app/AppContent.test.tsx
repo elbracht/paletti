@@ -13,9 +13,11 @@ const mockPalette: Palette = {
 const encoded = encodePalettes([mockPalette]);
 
 vi.mock('next/navigation', () => ({
-  useSearchParams: vi.fn(() => new URLSearchParams(`p=${encoded}`)),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
   useRouter: vi.fn(() => ({ replace: vi.fn() })),
 }));
+
+import { useSearchParams } from 'next/navigation';
 
 const origPushState = window.history.pushState;
 beforeEach(() => {
@@ -28,35 +30,34 @@ afterEach(() => {
 });
 
 describe('AppContent', () => {
-  it('renders the app layout', () => {
+  it('shows empty state when no palette is in URL', () => {
     render(<AppContent />);
-    expect(screen.getByText('Paletti')).toBeInTheDocument();
+    expect(screen.getByText('Select a palette to start editing')).toBeInTheDocument();
   });
 
-  it('shows palette editor with charts when a palette is loaded', () => {
+  it('shows palette editor when a palette is loaded from URL', () => {
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`p=${encoded}`));
     render(<AppContent />);
-    // Primary appears in both sidebar and editor header
     expect(screen.getAllByText('Primary').length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('Hue')).toBeInTheDocument();
     expect(screen.getByText('Saturation')).toBeInTheDocument();
     expect(screen.getByText('Lightness')).toBeInTheDocument();
   });
 
-  it('can click the add palette button', () => {
+  it('can add a palette when empty', () => {
     render(<AppContent />);
     fireEvent.click(screen.getByTitle('New palette'));
-    // After adding, we should see at least the original "Primary" and a new palette
-    expect(screen.getByText('Primary')).toBeInTheDocument();
-    // The editor should still be visible (new palette auto-selected)
     expect(screen.getByText('Hue')).toBeInTheDocument();
   });
 
   it('renders the export panel', () => {
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`p=${encoded}`));
     render(<AppContent />);
     expect(screen.getByText('Export')).toBeInTheDocument();
   });
 
   it('opens export modal and shows CSS', () => {
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`p=${encoded}`));
     render(<AppContent />);
     fireEvent.click(screen.getByText('Export'));
     expect(screen.getByText('Export — Tailwind v4')).toBeInTheDocument();

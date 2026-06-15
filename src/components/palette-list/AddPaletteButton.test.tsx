@@ -80,9 +80,40 @@ describe('AddPaletteButton', () => {
     fireEvent.click(screen.getByRole('button', { name: '' }));
     fireEvent.click(screen.getByText('Import CSS'));
 
-    // The modal backdrop has onClick={() => setModalOpen(false)}
     const backdrop = screen.getByText('Import — Tailwind v4 CSS').closest('.fixed')!;
     fireEvent.click(backdrop);
+
+    expect(screen.queryByText('Import — Tailwind v4 CSS')).not.toBeInTheDocument();
+  });
+
+  it('closes dropdown via backdrop click', () => {
+    render(<AddPaletteButton onAdd={vi.fn()} onImport={vi.fn()} />);
+
+    // Open dropdown
+    fireEvent.click(screen.getByRole('button', { name: '' }));
+    expect(screen.getByText('Import CSS')).toBeInTheDocument();
+
+    // Click the dropdown backdrop
+    const dropdownBackdrop = screen.getByText('Import CSS').closest('.relative')!.querySelector('.fixed')!;
+    fireEvent.click(dropdownBackdrop);
+
+    expect(screen.queryByText('Import CSS')).not.toBeInTheDocument();
+  });
+
+  it('closes modal via close button (X)', () => {
+    render(<AddPaletteButton onAdd={vi.fn()} onImport={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole('button', { name: '' }));
+    fireEvent.click(screen.getByText('Import CSS'));
+
+    // Find the close button inside the modal (it's the one with faXmark icon)
+    const closeBtn = screen.getByText('Import — Tailwind v4 CSS')
+      .closest('.rounded-2xl')!
+      .querySelectorAll('button');
+    const xButton = Array.from(closeBtn).find(
+      (btn) => btn.querySelector('.svg-inline--fa.fa-xmark'),
+    )!;
+    fireEvent.click(xButton);
 
     expect(screen.queryByText('Import — Tailwind v4 CSS')).not.toBeInTheDocument();
   });

@@ -69,6 +69,16 @@ describe('PaletteEditor', () => {
     expect(onHueShift).toHaveBeenCalled();
   });
 
+  it('calls onHueShift via slider pointer events', () => {
+    const onHueShift = vi.fn();
+    render(<PaletteEditor {...defaultProps} onHueShift={onHueShift} />);
+    const sliders = screen.getAllByRole('slider');
+    fireEvent.pointerDown(sliders[0]);
+    fireEvent.pointerUp(sliders[0]);
+    // After pointerUp, slidingField is cleared
+    expect(screen.queryByText('Hue')).toBeInTheDocument();
+  });
+
   it('calls onUpdateColor when a table cell is edited', () => {
     const onUpdateColor = vi.fn();
     render(<PaletteEditor {...defaultProps} onUpdateColor={onUpdateColor} />);

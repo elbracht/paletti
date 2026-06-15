@@ -151,6 +151,24 @@ describe('hueToName', () => {
   });
 });
 
+describe('hslToRgb branch coverage via hslToOklch', () => {
+  it.each([
+    { desc: 'red (h < 60)', h: 10 },
+    { desc: 'yellow-green (h < 120)', h: 80 },
+    { desc: 'green (h < 180)', h: 150 },
+    { desc: 'cyan (h < 240)', h: 210 },
+    { desc: 'blue (h < 300)', h: 270 },
+    { desc: 'magenta (h >= 300)', h: 330 },
+  ])('handles $desc', ({ h }) => {
+    const result = hslToOklch(h, 50, 50);
+    expect(result).toMatch(/^oklch\(/);
+  });
+
+  it('handles gray (s=0, any hue)', () => {
+    expect(hslToOklch(0, 0, 50)).toMatch(/^oklch\(/);
+  });
+});
+
 describe('clamp', () => {
   it('clamps below min', () => expect(clamp(-5, 0, 100)).toBe(0));
   it('clamps above max', () => expect(clamp(150, 0, 100)).toBe(100));
