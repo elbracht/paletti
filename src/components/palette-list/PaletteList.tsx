@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Palette } from '@/types/palette';
 import { PaletteCard } from './PaletteCard';
 import { AddPaletteButton } from './AddPaletteButton';
@@ -27,6 +28,7 @@ export function PaletteList({
   onDelete,
   onReorder,
 }: PaletteListProps) {
+  const searchParams = useSearchParams();
   const dragIndex = useRef<number | null>(null);
   const [activeDragIndex, setActiveDragIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -93,7 +95,7 @@ export function PaletteList({
     >
       <div className="flex h-14 shrink-0 items-center justify-between border-b border-zinc-200 px-4 dark:border-zinc-800">
         <h1 className="flex items-center gap-2 text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href={`/?${searchParams.toString()}`} className="flex items-center gap-2">
             <svg viewBox="0 0 32 32" className="h-5 w-5 shrink-0">
               <rect width="32" height="32" rx="6" fill="#18181b" />
               <rect x="5" y="5" width="22" height="4" rx="1.5" fill="#E1EEFF" />
