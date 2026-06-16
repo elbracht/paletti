@@ -4,6 +4,10 @@ import { PaletteList } from './PaletteList';
 import type { Palette } from '@/types/palette';
 import { createDefaultColors } from '@/lib/palette';
 
+vi.mock('next/navigation', () => ({
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 function makePalette(id: string, name = 'Test'): Palette {
   return { id, name, colors: createDefaultColors() };
 }
