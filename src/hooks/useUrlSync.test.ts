@@ -4,6 +4,7 @@ import { useUrlSync } from '@/hooks/useUrlSync';
 import { createDefaultColors } from '@/lib/palette';
 import { encodePalettes } from '@/lib/url-state';
 import type { Palette } from '@/types/palette';
+import type { ReadonlyURLSearchParams } from 'next/navigation';
 
 const mockPalette: Palette = {
   id: 'test-1',
@@ -11,15 +12,13 @@ const mockPalette: Palette = {
   colors: createDefaultColors(),
 };
 
-const mockUseSearchParams = vi.fn(() => ({
-  get: vi.fn(),
-}));
+const mockUseSearchParams = vi.fn((): Partial<ReadonlyURLSearchParams> => ({ get: vi.fn() }));
 
 vi.mock('next/navigation', () => ({
-  useSearchParams: () => mockUseSearchParams(),
+  useSearchParams: () => mockUseSearchParams() as ReadonlyURLSearchParams,
 }));
 
-let replaceState: ReturnType<typeof vi.fn>;
+let replaceState: (...args: unknown[]) => void;
 
 beforeEach(() => {
   vi.clearAllMocks();
