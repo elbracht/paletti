@@ -221,6 +221,16 @@ export function hslToOklch(h: number, s: number, l: number): string {
   return `oklch(${Lp}% ${Cp} ${Hp})`;
 }
 
+/** Convert HSL to a hex color string like `#3b82f6` */
+export function hslToHex(h: number, s: number, l: number): string {
+  const [r, g, b] = hslToRgb(h, s, l);
+  const toHex = (c: number) =>
+    Math.max(0, Math.min(255, Math.round(c * 255)))
+      .toString(16)
+      .padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
 /** Convert HSL to a CSS hsl() string */
 export function hslToCss(h: number, s: number, l: number): string {
   return `hsl(${Math.round(h)} ${Math.round(s)}% ${Math.round(l)}%)`;
