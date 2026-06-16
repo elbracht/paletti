@@ -35,8 +35,8 @@ describe('PaletteEditor', () => {
 
   it('renders the HSL table', () => {
     render(<PaletteEditor {...defaultProps} />);
-    expect(screen.getByText('50')).toBeInTheDocument();
-    expect(screen.getByText('950')).toBeInTheDocument();
+    expect(screen.getAllByText('50').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('950').length).toBeGreaterThan(0);
   });
 
   it('renders range sliders', () => {

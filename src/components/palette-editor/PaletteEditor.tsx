@@ -7,6 +7,7 @@ import { HslChart } from './HslChart';
 import { ShiftSlider } from './ShiftSlider';
 import { HslTable } from './HslTable';
 import { ExportPanel } from './ExportPanel';
+import { PalettePreview } from './PalettePreview';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface PaletteEditorProps {
@@ -78,6 +79,11 @@ export function PaletteEditor({
           <ThemeToggle />
           <ExportPanel palettes={allPalettes} />
         </div>
+      </div>
+
+      {/* Palette Preview (sticky between header and charts) */}
+      <div className="sticky top-14 z-10 border-b border-zinc-200 bg-white px-6 py-4 dark:border-zinc-800 dark:bg-zinc-950">
+        <PalettePreview palette={palette} />
       </div>
 
       {/* Charts + Controls */}
