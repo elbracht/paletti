@@ -148,17 +148,31 @@ export function HslChart({ colors, field, min, max, onChange, showAllLabels }: H
                 onPointerLeave={() => setHovering(null)}
               />
               {showLabel && (
-                <text
-                  x={x}
-                  y={y - DOT_RADIUS - 5}
-                  textAnchor="middle"
-                  fontSize="13"
-                  fontWeight="600"
-                  fill="var(--chart-label)"
-                  style={{ pointerEvents: 'none' }}
-                >
-                  {isDragging ? dragging.value : c[field]}
-                </text>
+                <>
+                  <text
+                    x={x}
+                    y={y - DOT_RADIUS - 5}
+                    textAnchor="middle"
+                    style={{ pointerEvents: 'none' }}
+                    fontSize="13"
+                    fontWeight="600"
+                    fill="var(--chart-label)"
+                  >
+                    {isDragging ? dragging.value : c[field]}
+                    {field === 'h' ? '°' : '%'}
+                  </text>
+                  <text
+                    x={x}
+                    y={y + DOT_RADIUS + 14}
+                    textAnchor="middle"
+                    style={{ pointerEvents: 'none' }}
+                    fontSize="10"
+                    fontWeight="500"
+                    fill="var(--chart-text)"
+                  >
+                    {c.shade}
+                  </text>
+                </>
               )}
             </g>
           );

@@ -80,13 +80,12 @@ describe('HslChart', () => {
   });
 
   it('shows labels when showAllLabels is true', () => {
-    // Some colors may share the same hue value (e.g. 217 appears twice)
-    // so we use getAllByText and check existence of all unique labels
-    const labels = colors.map((c) => String(c.h));
-    render(<HslChart {...defaultProps} showAllLabels={true} />);
-    for (const label of labels) {
-      const matches = screen.getAllByText(label);
-      expect(matches.length).toBeGreaterThanOrEqual(1);
+    const { container } = render(<HslChart {...defaultProps} showAllLabels={true} />);
+    const texts = container.querySelectorAll('text');
+    // 6 grid labels + 11 values + 11 shade labels = 28
+    expect(texts).toHaveLength(28);
+    for (const c of colors) {
+      expect(screen.getByText(String(c.shade))).toBeInTheDocument();
     }
   });
 
@@ -94,7 +93,8 @@ describe('HslChart', () => {
     const { container } = render(<HslChart {...defaultProps} />);
     const dot = container.querySelectorAll('circle')[0];
     fireEvent.pointerEnter(dot);
-    expect(screen.getByText(String(colors[0].h))).toBeInTheDocument();
+    expect(screen.getByText(String(colors[0].shade))).toBeInTheDocument();
+    expect(screen.getByText(`${colors[0].h}°`)).toBeInTheDocument();
   });
 
   it('hides label on pointer leave', () => {
@@ -102,7 +102,8 @@ describe('HslChart', () => {
     const dot = container.querySelectorAll('circle')[0];
     fireEvent.pointerEnter(dot);
     fireEvent.pointerLeave(dot);
-    expect(screen.queryByText(String(colors[0].h))).not.toBeInTheDocument();
+    expect(screen.queryByText(String(colors[0].shade))).not.toBeInTheDocument();
+    expect(screen.queryByText(`${colors[0].h}°`)).not.toBeInTheDocument();
   });
 
   it('clears drag state on svg pointer up', () => {
