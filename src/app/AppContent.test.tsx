@@ -37,7 +37,9 @@ describe('AppContent', () => {
   });
 
   it('shows palette editor when a palette is loaded from URL', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`p=${encoded}`) as unknown as ReadonlyURLSearchParams);
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(`p=${encoded}`) as unknown as ReadonlyURLSearchParams,
+    );
     render(<AppContent />);
     expect(screen.getAllByText('Primary').length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('Hue')).toBeInTheDocument();
@@ -52,13 +54,17 @@ describe('AppContent', () => {
   });
 
   it('renders the export panel', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`p=${encoded}`) as unknown as ReadonlyURLSearchParams);
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(`p=${encoded}`) as unknown as ReadonlyURLSearchParams,
+    );
     render(<AppContent />);
     expect(screen.getByText('Export')).toBeInTheDocument();
   });
 
   it('opens export modal and shows CSS', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(`p=${encoded}`) as unknown as ReadonlyURLSearchParams);
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams(`p=${encoded}`) as unknown as ReadonlyURLSearchParams,
+    );
     render(<AppContent />);
     fireEvent.click(screen.getByText('Export'));
     expect(screen.getByText('Export — Tailwind v4')).toBeInTheDocument();
